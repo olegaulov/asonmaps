@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<title>Tweets and Images from Hurricane Sandy displayed via
+			Google Maps JavaScript API v3</title>
+		<link rel="stylesheet" href="maps.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="jquery-ui.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="fancybox/source/jquery.fancybox.css" type="text/css" media="screen" />
+
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="jquery-ui.js"></script>
+		<script type="text/javascript"
+		src="fancybox/source/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCn6i3N8sOhO1xp2gIPYiGsCG2eU-r40es&sensor=false"></script>
+		<script type="text/javascript" src="maps.js"></script>
+
+	</head>
+	<body onload="initialize()">
+		<div id="mediafeed" style="float: left; width: 10%; height: 90%; overflow:scroll"></div>
+		<div id="mapfield" style="width: 67%">
+			<p>
+				loading
+			</p>
+		</div>
+		<div id="dataform"
+		style="float: right; position: absolute; top: 1%; left: 77%;">
+			<br />
+			<label for="sdate">Start Date</label>
+			<input type="text" id="sdatepicker"  />
+			<div id="shourpicker"></div><br />
+			<div id="sminpicker"></div>
+			<br />
+			<label for="edate">End Date</label>
+			<input type="text" id="edatepicker"  />
+			<div id="ehourpicker"></div><br />
+			<div id="eminpicker"></div>
+			<br />
+			<input type="radio" name="points" id="twitter" value="twitter" />
+			Twitter
+			<input type="text" id="searchtwitter" />
+			<br />
+			<input type="radio" name="points" id="pictures" value="pictures" />
+			Pictures
+			<input type="text" id="searchpictures" />
+			<br />
+			<input type="radio" name="points" id="both" value="both" checked="checked" />
+			Both
+			<br />
+			<div id="divimg" class="fancybox"></div>
+			<br />
+			<input type="button" id="filter" onclick="filterdata()" value="Filter" />
+			<br />
+			<br />
+			<br />
+			<select id="sloshdir">
+				<option value="n">N</option>
+				<option value="w">W</option>
+				<option value="e">E</option>
+				<option value="s">S</option>
+				<option value="ne">NE</option>
+				<option value="nw">NW</option>
+				<option value="se">SE</option>
+				<option value="sw">SW</option>
+				<option value="nne">NNE</option>
+				<option value="nnw">NNW</option>
+				<option value="sse">SSE</option>
+				<option value="ssw">SSW</option>
+				<option value="ene">NEN</option>
+				<option value="wnw" selected>WNW</option>
+				<option value="ese">ESE</option>
+				<option value="wsw">WSW</option>
+			</select>
+			<br />
+			Category<input id="sloshcat" class="spinner /">
+			<br />
+			Speed<input id="sloshspeed" class="spinner /">
+			<br />
+			<input type="radio" name="tides" id="high" value="2" checked="checked" />High
+			<input type="radio" name="tides" id="mean" value="0" />Mean
+			<input type="radio" name="tides" id="low" value="1" />Low
+			<br />
+			<!--Hours:<input id ="hours" class="spinner" /-->
+			<!--type="number" name="hours" min="0" max="24" step="3" /-->
+			<br />
+			Animate:<input id="animate" class="spinner"/><!--type="number" name="animate" min="0" max="30" step="3" /-->
+			<br />
+			<input type="checkbox" name="loop" id="loop" />
+			Loop
+			<br />
+			<input type="checkbox" name="direction" id="direction" checked="checked" />
+			Forward
+			<br />
+			<div id="tallies">
+			</div>
+			<br />
+			<div id="debug">
+				<p>Pid: <span id="pid"></span></p>
+			</div>
+			
+			<div id="progressbar"></div>
+		</div>
+	</body>
+</html>
+
