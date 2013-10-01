@@ -10,9 +10,9 @@ function __autoload_elastica($class)
 {
 	$path = str_replace('\\', '/', substr($class, 1));
 
-	if (file_exists('/home/adprice1/public_html/TweetMine/' . $path . '.php'))
+	if (file_exists('/home/oleg2/public_html/TweetMine/' . $path . '.php'))
 	{
-		require_once ('/home/adprice1/public_html/TweetMine/' . $path . '.php');
+		require_once ('/home/oleg2/public_html/TweetMine/' . $path . '.php');
 	}
 }
 
@@ -65,6 +65,7 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 	$elasticaQuery -> setFilter($elasticaFilterAnd);
 	$elasticaQuery -> setQuery($elasticaQueryRange);
 	$elasticaQuery -> addSort("instagram.created_time");
+	$elasticaQuery -> setFields(["created_time","caption","location","id"]);
 
 	$elasticaIndex = $elasticaClient -> getIndex("instagramsandy");
 
@@ -115,20 +116,20 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 		"to" => 44
 	));
 
-	//if (isset($date))
+	if (isset($date))
 	{
 		$elasticaQueryRange -> addField("tweet.created_at", array(
 			"from" => date("Y-m-d G:i:s", (int)$sdate),
 			"to" => date("Y-m-d G:i:s", (int)$edate)// + (60 * 60 * 24 - 1))
 		));
 	}
-	/*else
+	else
 	{
 		$elasticaQueryRange -> addField("tweet.created_at", array(
 			"from" => date("Y-m-d G:i:s", 1351483200),
 			"to" => date("Y-m-d G:i:s", 1351742400)
 		));
-	}*/
+	}
 	
 	if ($txt != "")
 	{
@@ -140,6 +141,8 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 	$elasticaQuery -> setFilter($elasticaFilterAnd);
 	$elasticaQuery -> setQuery($elasticaQueryRange);
 	$elasticaQuery -> addSort("tweet.created_at");
+	
+	$elasticaQuery -> setFields(["created_at","text","geo"]);
 
 	$elasticaIndex = $elasticaClient -> getIndex("twittersandy");
 
@@ -168,9 +171,9 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 spl_autoload_register(function($class)
 {
 
-	if (file_exists('/home/adprice1/public_html/TweetMine/' . $class . '.php'))
+	if (file_exists('/home/oleg2/public_html/TweetMine/' . $class . '.php'))
 	{
-		require_once ('/home/adprice1/public_html/TweetMine/' . $class . '.php');
+		require_once ('/home/oleg2/public_html/TweetMine/' . $class . '.php');
 	}
 
 });

@@ -68,6 +68,7 @@ function plot(hits, i)
 			position : new google.maps.LatLng(el.geo.coordinates[0], el.geo.coordinates[1]),
 			map : map,
 			title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
+			icon : 'tweetpin.png'
 		});
 		
 		$("#mediafeed").append(el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")");
@@ -94,14 +95,14 @@ function plot(hits, i)
 			position : new google.maps.LatLng(el.location.latitude, el.location.longitude),
 			map : map,
 			title : (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")",
-			icon : 'blank.png'
+			icon : 'instagrampin.png'
 		});
 		
 		$("#mediafeed").append((el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")");
 		
 		google.maps.event.addListener(m, 'click', function()
 		{
-			$("#divimg").html("<a href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\"></a>");
+			$("#divimg").html("<a class=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\"></a>");
 			$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" /><p style=\"width:30%\">" + (el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "") + "</p>");
 			$("#divimg a").click();
 		});
