@@ -147,7 +147,9 @@ function plot(hits, i)
 	
 	if(i < hits.length)// && d.getTime() < starttime.getTime() + totalspan)
 	{
-		$("#pid").html(setTimeout(function(){plot(hits, i + 1);}, anim));
+		//$("#pid").html(
+		setTimeout(function(){plot(hits, i + 1);}, anim);
+				//);
 	}
 	else
 	{		
