@@ -1,21 +1,19 @@
 html, body {
-				height: 100%;
-				margin: 0;
-				padding: 0;
-			}
-
-			#mapfield {
-				height: 100%;
-				width: 100%;
-			}
-#divimg{
-				width: 300px;
-				height: 300px;
-
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
-
-#popupimg{
-				width: 90%;
-
+#mapfield {
+	height: 100%;
+	width: 100%;
 }
+#divimg {
+	width: 300px;
+	height: 300px;
+}
+
+#popupimg {
+	width: 90%;
+}
+
