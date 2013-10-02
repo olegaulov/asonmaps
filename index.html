@@ -20,23 +20,21 @@
 	</head>
 	<body onload="initialize()">
 		<div id="mediafeed" style="float: left; width: 10%; height: 90%; overflow:scroll"></div>
-		<div id="mapfield" style="width: 67%">
-			<p>
-				loading
-			</p>
-		</div>
-		<div id="dataform"
-		style="float: right; position: absolute; top: 1%; left: 77%;">
+		<div id="mapfield" style="width: 67%"><p>loading</p></div>
+		<div id="dataform" style="float: right; position: absolute; top: 1%; left: 77%;">
 			<br />
 			<label for="sdate">Start Date</label>
 			<input type="text" id="sdatepicker"  />
-			<div id="shourpicker"></div><br />
-			<div id="sminpicker"></div>
+			Time<input id="shourpicker" class="spinner /">:<input id="sminpicker" class="spinner /">
+			
+			<!--div id="shourpicker"></div><br />
+			<div id="sminpicker"></div-->
 			<br />
 			<label for="edate">End Date</label>
 			<input type="text" id="edatepicker"  />
-			<div id="ehourpicker"></div><br />
-			<div id="eminpicker"></div>
+			Time<input id="ehourpicker" class="spinner /">:<input id="eminpicker" class="spinner /">
+			<!--div id="ehourpicker"></div><br />
+			<div id="eminpicker"></div-->
 			<br />
 			<input type="radio" name="points" id="twitter" value="twitter" />
 			Twitter
@@ -54,7 +52,11 @@
 			<input type="button" id="filter" onclick="filterdata()" value="Filter" />
 			<br />
 			<br />
-			<br />
+			 <ul>
+				<li><a href="#slosh">Slosh Data</a></li>
+				<li><a href="#tab-2">Proin dolor</a></li>
+			</ul>
+			<div id="slosh">
 			<select id="sloshdir">
 				<option value="n">N</option>
 				<option value="w">W</option>
@@ -73,7 +75,7 @@
 				<option value="ese">ESE</option>
 				<option value="wsw">WSW</option>
 			</select>
-			<br />
+			<br />			
 			Category<input id="sloshcat" class="spinner /">
 			<br />
 			Speed<input id="sloshspeed" class="spinner /">
@@ -81,11 +83,12 @@
 			<input type="radio" name="tides" id="high" value="2" checked="checked" />High
 			<input type="radio" name="tides" id="mean" value="0" />Mean
 			<input type="radio" name="tides" id="low" value="1" />Low
+			</div>
+			
+			<div id="tab-2">
+			</div>
 			<br />
-			<!--Hours:<input id ="hours" class="spinner" /-->
-			<!--type="number" name="hours" min="0" max="24" step="3" /-->
-			<br />
-			Animate:<input id="animate" class="spinner"/><!--type="number" name="animate" min="0" max="30" step="3" /-->
+			Animate:<input id="animate" class="spinner"/>
 			<br />
 			<input type="checkbox" name="loop" id="loop" />
 			Loop
