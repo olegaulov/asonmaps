@@ -355,26 +355,18 @@ function initialize()
 		$('.fancybox').fancybox();
 		$('#sdatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
 		$('#edatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
+		$(".tabs").tabs();
 		
-		$('#shourpicker').slider({min: 0, max: 23});
-		$('#sminpicker').slider({min: 0, max: 59});
-		$('#ehourpicker').slider({min: 0, max: 23});
-		$('#eminpicker').slider({min: 0, max: 59});
+		$('#shourpicker').spinner({min: 0, max: 23});
+		$('#sminpicker').spinner({min: 0, max: 59});
+		$('#ehourpicker').spinner({min: 0, max: 23});
+		$('#eminpicker').spinner({min: 0, max: 59});
 		
-		$("#animate").spinner({
-			max : 20000,
-			min : 1
-		});
+		$("#animate").spinner({max : 20000,	min : 1});
 		
-		$("#sloshcat").spinner({
-			max:5,
-			min:1
-		});
+		$("#sloshcat").spinner({max:5, min:1});
 		
-		$("#sloshspeed").spinner({
-			max:100,
-			min:1
-		});
+		$("#sloshspeed").spinner({max:100, min:1});
 	});
 
 	var myLatLng = new google.maps.LatLng(40.8, -72.6);
