@@ -46,9 +46,6 @@ google.maps.Marker.prototype.setMap = function(map)
 
 function plot(hits, i)
 {
-	//var total = i + 20;
-	//var starttime = "";
-	//var totalspan = 0;
 	var d = 0;
 	
 	var el = hits[i];
@@ -139,17 +136,10 @@ function plot(hits, i)
 	}
 
 	$("#nums").append("<li>total: " + hits.length + "</li>");
-	
-	/*totalspan = parseInt($("#hours").val()) * 60 * 60 * 1000;
-	var start  = $("#sdatepicker").val().split("/");
-	starttime = new Date(start[2], parseInt(start[0]) - 1, start[1], 0, 0, 0);*/
-	
-	
-	if(i < hits.length)// && d.getTime() < starttime.getTime() + totalspan)
+		
+	if(i < hits.length)
 	{
-		//$("#pid").html(
-		setTimeout(function(){plot(hits, i + 1);}, anim);
-				//);
+		setTimeout(function(){plot(hits, i + 1);}, anim);//);
 	}
 	else
 	{		
@@ -173,6 +163,8 @@ function drawmap(hits)
 		$("#mediafeed").html("");
 		p = 0;
 		t = 0;
+		tdaterange = {};
+		pdaterange = {};
 		plot(hits, 0);
 	}
 	else
