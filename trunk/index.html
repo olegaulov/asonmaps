@@ -11,6 +11,7 @@
 
 		<script type="text/javascript" src="jquery.js"></script>
 		<script type="text/javascript" src="jquery-ui.js"></script>
+		<script type="text/javascript" src="globalize.js"></script>
 		<script type="text/javascript"
 		src="fancybox/source/jquery.fancybox.pack.js"></script>
 		<script type="text/javascript"
@@ -25,16 +26,11 @@
 			<br />
 			<label for="sdate">Start Date</label>
 			<input type="text" id="sdatepicker"  />
-			Time<input id="shourpicker" class="spinner /">:<input id="sminpicker" class="spinner /">
-			
-			<!--div id="shourpicker"></div><br />
-			<div id="sminpicker"></div-->
+			Time<input id="stime" class="spinner" maxlength="6" value="12:00 AM" />
 			<br />
 			<label for="edate">End Date</label>
 			<input type="text" id="edatepicker"  />
-			Time<input id="ehourpicker" class="spinner /">:<input id="eminpicker" class="spinner /">
-			<!--div id="ehourpicker"></div><br />
-			<div id="eminpicker"></div-->
+			Time<input id="etime" class="spinner"  maxlength="6" value="12:00 PM" />
 			<br />
 			<input type="radio" name="points" id="twitter" value="twitter" />
 			Twitter

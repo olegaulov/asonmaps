@@ -341,19 +341,48 @@ function merge(left, right)
 }
 
 function initialize()
-{
+{	
 	$(document).ready(function()
-	{
+	{	 
+		$.widget( "ui.timespinner", $.ui.spinner, {
+			options: {
+				// seconds
+				step: 60 * 1000,
+				// hours
+				page: 60
+			},
+			_parse: function( value ) 
+			{
+				if(typeof value === "string") 
+				{
+					// already a timestamp
+					if(Number(value) == value) 
+					{
+						return Number(value);
+					}
+					return +Globalize.parseDate( value );
+				}
+				return value;
+			},
+			_format: function(value) 
+			{
+				return Globalize.format( new Date(value), "t" );
+			}
+		});
+	
+		Globalize.culture("en-EN");
+	
 		$('.fancybox').fancybox();
 		$('#sdatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
 		$('#edatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
 		$(".tabs").tabs();
 		
-		$('#shourpicker').spinner({min: 0, max: 23});
-		$('#sminpicker').spinner({min: 0, max: 59});
-		$('#ehourpicker').spinner({min: 0, max: 23});
-		$('#eminpicker').spinner({min: 0, max: 59});
+		$('#stime').timespinner();//{min: 0, max: 23});
+		//$('#sminpicker').timespinner();//{min: 0, max: 59});
+		$('#etime').timespinner();//{min: 0, max: 23});
+		//$('#eminpicker').timespinner();//{min: 0, max: 59});
 		
+		 
 		$("#animate").spinner({max : 20000,	min : 1});
 		
 		$("#sloshcat").spinner({max:5, min:1});
