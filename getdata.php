@@ -65,7 +65,7 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 	$elasticaQuery -> setFilter($elasticaFilterAnd);
 	$elasticaQuery -> setQuery($elasticaQueryRange);
 	$elasticaQuery -> addSort("instagram.created_time");
-	$elasticaQuery -> setFields(["created_time","caption","location","id"]);
+	$elasticaQuery -> setFields(array("created_time","caption","location","id"));
 
 	$elasticaIndex = $elasticaClient -> getIndex("instagramsandy");
 
@@ -142,7 +142,7 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 	$elasticaQuery -> setQuery($elasticaQueryRange);
 	$elasticaQuery -> addSort("tweet.created_at");
 	
-	$elasticaQuery -> setFields(["created_at","text","geo"]);
+	$elasticaQuery -> setFields(array("created_at","text","geo"));
 
 	$elasticaIndex = $elasticaClient -> getIndex("twittersandy");
 
