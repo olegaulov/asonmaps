@@ -122,14 +122,14 @@ function plot(hits, i)
 
 	$("#tallies").html("<ul id=\"nums\"></ul>");
 	$("#nums").append("<li>tweets: " + t + "</li>");
-	$("#nums").append("<li><ul id=\"tweetdates\">Tweetdates</ul></li>");
+	$("#nums").append("<li>Tweetdates<ul id=\"tweetdates\"></ul></li>");
 	for (var h in tdaterange)
 	{
 		$("#tweetdates").append("<li>" + h + ": " + tdaterange[h] + "</li>");
 	}
 
 	$("#nums").append("<li>pictures: " + p + "</li>");
-	$("#nums").append("<li><ul id=\"picdates\">PicDates</ul></li>");
+	$("#nums").append("<li>PicDates<ul id=\"picdates\"></ul></li>");
 	for(var h in pdaterange)
 	{
 		$("#picdates").append("<li>" + h + ": " + pdaterange[h] + "</li>");
@@ -139,7 +139,7 @@ function plot(hits, i)
 		
 	if(i < hits.length)
 	{
-		setTimeout(function(){plot(hits, i + 1);}, anim);//);
+		setTimeout(function(){plot(hits, i + 1);}, anim);
 	}
 	else
 	{		
@@ -377,17 +377,14 @@ function initialize()
 		$('#edatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
 		$(".tabs").tabs();
 		
-		$('#stime').timespinner();//{min: 0, max: 23});
-		//$('#sminpicker').timespinner();//{min: 0, max: 59});
-		$('#etime').timespinner();//{min: 0, max: 23});
-		//$('#eminpicker').timespinner();//{min: 0, max: 59});
-		
+		$('#stime').timespinner();
+		$('#etime').timespinner();		
 		 
-		$("#animate").spinner({max : 20000,	min : 1});
-		
-		$("#sloshcat").spinner({max:5, min:1});
-		
+		$("#animate").spinner({max : 20000,	min : 1});		
+		$("#sloshcat").spinner({max:5, min:1});		
 		$("#sloshspeed").spinner({max:100, min:1});
+		
+		$("#tabs").tabs()
 	});
 
 	var myLatLng = new google.maps.LatLng(40.8, -72.6);
@@ -403,22 +400,9 @@ function initialize()
 
 	$("#sdatepicker").val("10/29/2012");
 	$("#edatepicker").val("10/29/2012");
-
-	$('#shourpicker').slider();
-	$('#sminpicker').slider();
-	$('#ehourpicker').slider();
-	$('#eminpicker').slider();
-	
-
-	$('#shourpicker').slider("value", 0);
-	$('#sminpicker').slider("value", 0);
-	$('#ehourpicker').slider("value", 12);
-	$('#eminpicker').slider("value", 0);
-	
 	
 	$("#sloshcat").val("1");
 	$("#sloshspeed").val("20");
-	//$("#hours").val("12");
 	$("#animate").val("5000");
 	
 	$("#progressbar").progressbar({value: 0});
@@ -433,8 +417,10 @@ function initialize()
 	
 	var sd = $("#sdatepicker").val().split("/");
 	var ed = $("#edatepicker").val().split("/");
-	var sdate = new Date(sd[2], sd[0] - 1, sd[1], $('#shourpicker').slider("value"), $('#sminpicker').slider("value"), 0);
-	var edate = new Date(ed[2], ed[0] - 1, ed[1], $('#ehourpicker').slider("value"), $('#eminpicker').slider("value"), 0);
+	var sdate = new Date(sd[2], sd[0] - 1, sd[1], 0, 0, 0);
+	var edate = new Date(ed[2], ed[0] - 1, ed[1], 12, 0, 0);
+	
+	reveal("tallies");
 	
 	$.ajax({
 		url : "getdata.php",
@@ -453,7 +439,6 @@ function initialize()
 			clearInterval($("#pid").html());
 			$("#progressbar").progressbar({ maxValue:100, value:  85});
 			dates = mergesort(dates);
-			//drawmap(coords);
 			drawmap(pics);
 			drawmap(tweets);
 		},
@@ -462,4 +447,16 @@ function initialize()
 			downloaderror = true;
 		}
 	});	
+}
+
+function reveal(id)
+{
+	if($("#" + id)[0].style.display == "none")
+	{
+		$("#" + id).slideDown()
+	}
+	else
+	{
+		$("#" + id).slideUp()
+	}
 }

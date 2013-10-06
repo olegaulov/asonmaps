@@ -40,20 +40,10 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 		"to" => 44
 	));
 
-	//if (isset($date))
-	{
-		$elasticaQueryRange -> addField("instagram.created_time", array(
-			"from" => date("U", (int)$sdate),
-			"to" => date("U", (int)$edate)// + (60 * 60 * 24 - 1))
-		));
-	}
-	/*else
-	{
-		$elasticaQueryRange -> addField("instagram.created_time", array(
-			"from" => 1351483200,
-			"to" => 1351742400
-		));
-	}*/
+	$elasticaQueryRange -> addField("instagram.created_time", array(
+		"from" => date("U", (int)$sdate),
+		"to" => date("U", (int)$edate)
+	));
 
 	if ($txt != "")
 	{
@@ -65,7 +55,12 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 	$elasticaQuery -> setFilter($elasticaFilterAnd);
 	$elasticaQuery -> setQuery($elasticaQueryRange);
 	$elasticaQuery -> addSort("instagram.created_time");
-	$elasticaQuery -> setFields(array("created_time","caption","location","id"));
+	$elasticaQuery -> setFields(array(
+		"created_time",
+		"caption",
+		"location",
+		"id"
+	));
 
 	$elasticaIndex = $elasticaClient -> getIndex("instagramsandy");
 
@@ -116,21 +111,11 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 		"to" => 44
 	));
 
-	if (isset($date))
-	{
-		$elasticaQueryRange -> addField("tweet.created_at", array(
-			"from" => date("Y-m-d G:i:s", (int)$sdate),
-			"to" => date("Y-m-d G:i:s", (int)$edate)// + (60 * 60 * 24 - 1))
-		));
-	}
-	else
-	{
-		$elasticaQueryRange -> addField("tweet.created_at", array(
-			"from" => date("Y-m-d G:i:s", 1351483200),
-			"to" => date("Y-m-d G:i:s", 1351742400)
-		));
-	}
-	
+	$elasticaQueryRange -> addField("tweet.created_at", array(
+		"from" => date("Y-m-d G:i:s", (int)$sdate),
+		"to" => date("Y-m-d G:i:s", (int)$edate)
+	));
+
 	if ($txt != "")
 	{
 		$elasticaFuzzy -> setTerm("tweet.text", $txt);
@@ -141,8 +126,12 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 	$elasticaQuery -> setFilter($elasticaFilterAnd);
 	$elasticaQuery -> setQuery($elasticaQueryRange);
 	$elasticaQuery -> addSort("tweet.created_at");
-	
-	$elasticaQuery -> setFields(array("created_at","text","geo"));
+
+	$elasticaQuery -> setFields(array(
+		"created_at",
+		"text",
+		"geo"
+	));
 
 	$elasticaIndex = $elasticaClient -> getIndex("twittersandy");
 

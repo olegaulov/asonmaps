@@ -48,6 +48,7 @@
 			<input type="button" id="filter" onclick="filterdata()" value="Filter" />
 			<br />
 			<br />
+			<div id="tabs">
 			 <ul>
 				<li><a href="#slosh">Slosh Data</a></li>
 				<li><a href="#tab-2">Proin dolor</a></li>
@@ -83,6 +84,7 @@
 			
 			<div id="tab-2">
 			</div>
+			</div>
 			<br />
 			Animate:<input id="animate" class="spinner"/>
 			<br />
@@ -92,12 +94,10 @@
 			<input type="checkbox" name="direction" id="direction" checked="checked" />
 			Forward
 			<br />
+			<div id="btnTally" onclick="reveal('tallies')">Tallies</div>
 			<div id="tallies">
 			</div>
 			<br />
-			<div id="debug">
-				<!--p>Pid: <span id="pid"></span></p-->
-			</div>
 			
 			<div id="progressbar"></div>
 		</div>
