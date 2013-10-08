@@ -191,14 +191,26 @@ function buildkmz()
 	ctaLayer.setMap(map);
 }
 
+function parsetime(t)
+{
+	var h = parseInt(t.split(":")[0]);
+	var m = parseInt(t.split(":")[1].split(" ")[0]);
+	
+	h += (t.split(":")[1].split(" ")[1] == "PM" ? 12 : 0);
+	
+	return [h, m];
+}
+
 function filterdata()
 {	
 	var sd = $("#sdatepicker").val().split("/");
 	var ed = $("#edatepicker").val().split("/");
-	var st = $('#stime').val().split(":");
-	var et = $('#etime').val().split(":");
-	var sdate = new Date(sd[2], sd[0] - 1, sd[1], st[0], st[1].split(" ")[0], 0);
-	var edate = new Date(ed[2], ed[0] - 1, ed[1], et[0], et[1].split(" ")[0], 0);	
+	
+	var st = parsetime($('#stime').val());
+	var et = parsetime($('#etime').val());	
+	
+	var sdate = new Date(sd[2], sd[0] - 1, sd[1], st[0], st[1], 0);
+	var edate = new Date(ed[2], ed[0] - 1, ed[1], et[0], et[1], 0);	
 	
 	clearTimeout(pid);
 	$.ajax({
@@ -206,10 +218,12 @@ function filterdata()
 		type : "post",
 		data : {
 			"dataset" : $("#dataset").val(),
-			"twittext" : $("#searchtwitter").val(),
-			"pictext" : $("#searchpictures").val(),
+			"twittext" : $("#tweetsearch").val(),
+			"pictext" : $("#picsearch").val(),
 			"sdate" : sdate.getTime() / 1000,
-			"edate" : edate.getTime() / 1000
+			"edate" : edate.getTime() / 1000,
+			"start": 0,
+			"end": 2000
 		},
 		dataType : "json",
 		success : function(text)

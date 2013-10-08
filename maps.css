@@ -23,8 +23,23 @@ html, body {
 
 #mediafeed{
 	float: left; 
-	width: 10%; 
+	width: 245px;
 	height: 90%; 
-	overflow:scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-left:2%;
+	padding-right:2%;
+}
+
+#mapfield{
+	width:57%
+}
+
+#dataform{
+	float: right;
+	position: absolute;
+	top: 1%; 
+	left: 77%;
+	width:333px;
 }
 
