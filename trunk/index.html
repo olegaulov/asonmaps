@@ -21,8 +21,8 @@
 	</head>
 	<body onload="initialize()">
 		<div id="mediafeed"></div>
-		<div id="mapfield" style="width: 67%"><p>loading</p></div>
-		<div id="dataform" style="float: right; position: absolute; top: 1%; left: 77%;">
+		<div id="mapfield"><p>loading</p></div>
+		<div id="dataform">
 			<br />
 			<label for="sdate">Start Date</label>
 			<input type="text" id="sdatepicker"  />
@@ -34,11 +34,11 @@
 			<br />
 			<input type="radio" name="points" id="twitter" value="twitter" />
 			Twitter
-			<input type="text" id="searchtwitter" />
+			<input type="text" id="tweetsearch" />
 			<br />
 			<input type="radio" name="points" id="pictures" value="pictures" />
 			Pictures
-			<input type="text" id="searchpictures" />
+			<input type="text" id="picsearch" />
 			<br />
 			<input type="radio" name="points" id="both" value="both" checked="checked" />
 			Both
@@ -83,10 +83,11 @@
 			</div>
 			
 			<div id="psurge">
+				
 			</div>
 			</div>
 			<br />
-			Animate:<button id="fastest" onclick="$('#animate').val(1)">Fastest</button><input id="animate" class="spinner"/><button id="slowest" onclick="$('#animate').val(20000)">Slowest</button>
+			Animate:<button id="fastest" onclick="$('#animate').val(1)">|&lt;</button><input id="animate" class="spinner"/><button id="slowest" onclick="$('#animate').val(20000)">&gt;|</button>
 			<br />
 			<input type="checkbox" name="loop" id="loop" />
 			Loop
