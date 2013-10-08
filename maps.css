@@ -21,3 +21,10 @@ html, body {
 	width:10em;
 }
 
+#mediafeed{
+	float: left; 
+	width: 10%; 
+	height: 90%; 
+	overflow:scroll;
+}
+

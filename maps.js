@@ -68,7 +68,7 @@ function plot(hits, i)
 			icon : 'tweetpin.png'
 		});
 		
-		$("#mediafeed").append(el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")");
+		$("#mediafeed").append("<p>" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 
 		google.maps.event.addListener(m, 'click', function(){});
 		t++;
@@ -95,7 +95,7 @@ function plot(hits, i)
 			icon : 'instagrampin.png'
 		});
 		
-		$("#mediafeed").append((el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")");
+		$("#mediafeed").append("<p>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 		
 		google.maps.event.addListener(m, 'click', function()
 		{
@@ -195,8 +195,10 @@ function filterdata()
 {	
 	var sd = $("#sdatepicker").val().split("/");
 	var ed = $("#edatepicker").val().split("/");
-	var sdate = new Date(sd[2], sd[0] - 1, sd[1], $('#shourpicker').slider("value"), $('#sminpicker').slider("value"), 0);
-	var edate = new Date(ed[2], ed[0] - 1, ed[1], $('#ehourpicker').slider("value"), $('#eminpicker').slider("value"), 0);	
+	var st = $('#stime').val().split(":");
+	var et = $('#etime').val().split(":");
+	var sdate = new Date(sd[2], sd[0] - 1, sd[1], st[0], st[1].split(" ")[0], 0);
+	var edate = new Date(ed[2], ed[0] - 1, ed[1], et[0], et[1].split(" ")[0], 0);	
 	
 	clearTimeout(pid);
 	$.ajax({
@@ -378,13 +380,16 @@ function initialize()
 		$(".tabs").tabs();
 		
 		$('#stime').timespinner();
-		$('#etime').timespinner();		
+		$('#etime').timespinner();	
+		
+		$('#stime').val("12:00 AM");
+		$('#etime').val("12:00 PM");	
 		 
 		$("#animate").spinner({max : 20000,	min : 1});		
 		$("#sloshcat").spinner({max:5, min:1});		
 		$("#sloshspeed").spinner({max:100, min:1});
 		
-		$("#tabs").tabs()
+		$("#tabs").tabs();
 	});
 
 	var myLatLng = new google.maps.LatLng(40.8, -72.6);
@@ -453,10 +458,10 @@ function reveal(id)
 {
 	if($("#" + id)[0].style.display == "none")
 	{
-		$("#" + id).slideDown()
+		$("#" + id).slideDown();
 	}
 	else
 	{
-		$("#" + id).slideUp()
+		$("#" + id).slideUp();
 	}
 }
