@@ -154,18 +154,116 @@ function plot(hits, i)
 	}
 }
 
+function plotall(hits)
+{
+	var d = 0;
+	hits.forEach(function(el, idx, all)
+	{
+		if (el.geo != null && ($("#twitter")[0].checked || $("#both")[0].checked))
+		{
+			centerlat += el.geo.coordinates[0];
+			centerlong += el.geo.coordinates[1];
+	
+			var day = el.created_at.split(" ")[0].split("-");
+			var time = el.created_at.split(" ")[1].split(":");
+	
+			d = new Date(day[0], day[1] - 1, day[2], time[0], time[1], time[2], 0);
+	
+			var m = new google.maps.Marker({
+				position : new google.maps.LatLng(el.geo.coordinates[0], el.geo.coordinates[1]),
+				map : map,
+				title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
+				icon : 'tweetpin.png'
+			});
+			
+			$("#mediafeed").append("<p>" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+	
+			google.maps.event.addListener(m, 'click', function(){});
+			t++;
+	
+			if (tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
+			{
+				tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
+			}
+			else
+			{
+				tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
+			}
+		}
+		else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
+		{
+			centerlat += el.location.latitude;
+			centerlong += el.location.longitude;
+	
+			d = new Date(parseInt(el.created_time) * 1000);
+			var m = new google.maps.Marker({
+				position : new google.maps.LatLng(el.location.latitude, el.location.longitude),
+				map : map,
+				title : (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")",
+				icon : 'instagrampin.png'
+			});
+			
+			$("#mediafeed").append("<p>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+			
+			google.maps.event.addListener(m, 'click', function()
+			{
+				$("#divimg").html("<a class=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\"></a>");
+				$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" /><p style=\"width:30%\">" + (el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "") + "</p>");
+				$("#divimg a").click();
+			});
+	
+			p++;
+	
+			if (pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
+			{
+				pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
+			}
+			else
+			{
+				pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
+			}
+		}
+		else
+		{
+			d = new Date();
+		}			
+	});
+	
+	$("#tallies").html("<ul id=\"nums\"></ul>");
+	$("#nums").append("<li>tweets: " + t + "</li>");
+	$("#nums").append("<li>Tweetdates<ul id=\"tweetdates\"></ul></li>");
+	for (var h in tdaterange)
+	{
+		$("#tweetdates").append("<li>" + h + ": " + tdaterange[h] + "</li>");
+	}
+	
+	$("#nums").append("<li>pictures: " + p + "</li>");
+	$("#nums").append("<li>PicDates<ul id=\"picdates\"></ul></li>");
+	for(var h in pdaterange)
+	{
+		$("#picdates").append("<li>" + h + ": " + pdaterange[h] + "</li>");
+	}
+	
+	$("#nums").append("<li>total: " + hits.length + "</li>");
+}
+
 function drawmap(hits)
 {
 	if (hits != null && hits.length > 0)
 	{
-		map.clearMarkers(null);
-		buildkmz();
 		$("#mediafeed").html("");
 		p = 0;
 		t = 0;
 		tdaterange = {};
 		pdaterange = {};
-		plot(hits, 0);
+		if(parseInt($("#animate").val()) > 0)
+		{
+			plot(hits, 0);
+		}
+		else
+		{
+			plotall(hits);
+		}
 	}
 	else
 	{
@@ -175,21 +273,36 @@ function drawmap(hits)
 
 function buildkmz()
 {	
-	var tide = 0;
-	var tides = document.getElementsByName("tides");
-	
-	for(var i = 0; i < tides.length; i++)
+	if($("#psurge")[0].style.display == "none")
 	{
-		if(tides[i].checked)
+		var tide = 0;
+		var tides = document.getElementsByName("tides");
+		
+		for(var i = 0; i < tides.length; i++)
 		{
-			tide = tides[i].value;
+			if(tides[i].checked)
+			{
+				tide = tides[i].value;
+			}
 		}
+	
+		var kmz = $("#sloshdir").val() + $("#sloshcat").val() + $("#sloshspeed").val() + "i" + tide;
+		ctaLayer = new google.maps.KmlLayer('http://bluegrit.cs.umbc.edu/~adprice1/TweetMine/SLOSH/' + kmz + '.kmz');
+		ctaLayer.setMap(map);
+	}
+	else
+	{
+		//sandy_Adv25_2012102812_gt6_1.kmz
+		var date = $("#surgedate").val();
+		var num = $("#hour").val();
+		var kmz = "sandy_" + $("#advisory").val() + date + num + $("#height").val() + "_1.kmz";
+		ctaLayer = new google.maps.KmlLayer('http://bluegrit.cs.umbc.edu/~adprice1/TweetMine/SLOSH/' + kmz + '.kmz');
+		ctaLayer.setMap(map);
 	}
 	
-	var kmz = $("#sloshdir").val() + $("#sloshcat").val() + $("#sloshspeed").val() + "i" + tide;
-	ctaLayer = new google.maps.KmlLayer('http://bluegrit.cs.umbc.edu/~adprice1/TweetMine/SLOSH/' + kmz + '.kmz');
-	ctaLayer.setMap(map);
+	
 }
+
 
 function parsetime(t)
 {
@@ -198,8 +311,18 @@ function parsetime(t)
 	
 	h += (t.split(":")[1].split(" ")[1] == "PM" ? 12 : 0);
 	
+	if(h == 24 && t.split(":")[1].split(" ")[1] == "PM")
+	{
+		h = 12;
+	}
+	else if(h == 12 && t.split(":")[1].split(" ")[1] == "AM")
+	{
+		h = 0;
+	}
+	
 	return [h, m];
 }
+
 
 function filterdata()
 {	
@@ -233,6 +356,8 @@ function filterdata()
 			pics = [];
 			preparse(text);
 			dates = mergesort(dates);
+			map.clearMarkers(null);
+			buildkmz();
 
 			drawmap(pics);
 			drawmap(tweets);
@@ -243,6 +368,7 @@ function filterdata()
 		}
 	});
 }
+
 
 function preparse(text)
 {
@@ -292,6 +418,7 @@ function preparse(text)
 	}
 }
 
+
 function mergesort(m)
 {
 	if (m.length > 1)
@@ -322,6 +449,7 @@ function mergesort(m)
 		return m;
 	}
 }
+
 
 function merge(left, right)
 {
@@ -355,6 +483,7 @@ function merge(left, right)
 	}
 	return result;
 }
+
 
 function initialize()
 {	
@@ -391,6 +520,8 @@ function initialize()
 		$('.fancybox').fancybox();
 		$('#sdatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
 		$('#edatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
+		$('#surgedate').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
+		
 		$(".tabs").tabs();
 		
 		$('#stime').timespinner();
@@ -399,7 +530,7 @@ function initialize()
 		$('#stime').val("12:00 AM");
 		$('#etime').val("12:00 PM");	
 		 
-		$("#animate").spinner({max : 20000,	min : 1});		
+		$("#animate").spinner({max : 20000,	min : 0});		
 		$("#sloshcat").spinner({max:5, min:1});		
 		$("#sloshspeed").spinner({max:100, min:1});
 		
@@ -416,9 +547,6 @@ function initialize()
 	};
 
 	map = new google.maps.Map(document.getElementById('mapfield'), mapOptions);
-
-	$("#sdatepicker").val("10/29/2012");
-	$("#edatepicker").val("10/29/2012");
 	
 	$("#sloshcat").val("1");
 	$("#sloshspeed").val("20");
@@ -458,6 +586,9 @@ function initialize()
 			clearInterval($("#pid").html());
 			$("#progressbar").progressbar({ maxValue:100, value:  85});
 			dates = mergesort(dates);
+			
+			map.clearMarkers(null);
+			buildkmz();
 			drawmap(pics);
 			drawmap(tweets);
 		},
