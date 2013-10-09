@@ -21,24 +21,30 @@
 	</head>
 	<body onload="initialize()">
 		<div id="mediafeed"></div>
-		<div id="mapfield"><p>loading</p></div>
+		<div id="mapfield">
+			<p>
+				loading
+			</p>
+		</div>
 		<div id="dataform">
 			<br />
 			<label for="sdate">Start Date</label>
-			<input type="text" id="sdatepicker"  />
-			Time<input id="stime" class="spinner" maxlength="6" value="12:00 AM" />
+			<input type="text" id="sdatepicker" class="hasDatePicker" value="10/29/2012"  />
+			Time
+			<input id="stime" class="spinner" maxlength="6" value="12:00 AM" />
 			<br />
 			<label for="edate">End Date</label>
-			<input type="text" id="edatepicker"  />
-			Time<input id="etime" class="spinner"  maxlength="6" value="12:00 PM" />
+			<input type="text" id="edatepicker" class="hasDatePicker" value="10/29/2012" />
+			Time
+			<input id="etime" class="spinner"  maxlength="6" value="12:00 PM" />
 			<br />
 			<input type="radio" name="points" id="twitter" value="twitter" />
 			Twitter
-			<input type="text" id="tweetsearch" />
+			<input type="text" id="tweetsearch" value="" />
 			<br />
 			<input type="radio" name="points" id="pictures" value="pictures" />
 			Pictures
-			<input type="text" id="picsearch" />
+			<input type="text" id="picsearch" value="" />
 			<br />
 			<input type="radio" name="points" id="both" value="both" checked="checked" />
 			Both
@@ -49,45 +55,123 @@
 			<br />
 			<br />
 			<div id="tabs">
-			 <ul>
-				<li><a href="#slosh">Slosh Model</a></li>
-				<li><a href="#psurge">P-Surge Model</a></li>
-			</ul>
-			<div id="slosh">
-			<select id="sloshdir">
-				<option value="n">N</option>
-				<option value="w">W</option>
-				<option value="e">E</option>
-				<option value="s">S</option>
-				<option value="ne">NE</option>
-				<option value="nw">NW</option>
-				<option value="se">SE</option>
-				<option value="sw">SW</option>
-				<option value="nne">NNE</option>
-				<option value="nnw">NNW</option>
-				<option value="sse">SSE</option>
-				<option value="ssw">SSW</option>
-				<option value="ene">NEN</option>
-				<option value="wnw" selected>WNW</option>
-				<option value="ese">ESE</option>
-				<option value="wsw">WSW</option>
-			</select>
-			<br />			
-			Category<input id="sloshcat" class="spinner /">
-			<br />
-			Speed<input id="sloshspeed" class="spinner /">
-			<br />
-			<input type="radio" name="tides" id="high" value="2" checked="checked" />High
-			<input type="radio" name="tides" id="mean" value="0" />Mean
-			<input type="radio" name="tides" id="low" value="1" />Low
+				<ul>
+					<li>
+						<a href="#slosh">Slosh Model</a>
+					</li>
+					<li>
+						<a href="#psurge">P-Surge Model</a>
+					</li>
+				</ul>
+				<div id="slosh">
+					<select id="sloshdir">
+						<option value="n">N</option>
+						<option value="w">W</option>
+						<option value="e">E</option>
+						<option value="s">S</option>
+						<option value="ne">NE</option>
+						<option value="nw">NW</option>
+						<option value="se">SE</option>
+						<option value="sw">SW</option>
+						<option value="nne">NNE</option>
+						<option value="nnw">NNW</option>
+						<option value="sse">SSE</option>
+						<option value="ssw">SSW</option>
+						<option value="ene">NEN</option>
+						<option value="wnw" selected>WNW</option>
+						<option value="ese">ESE</option>
+						<option value="wsw">WSW</option>
+					</select>
+					<br />
+					Category
+					<input id="sloshcat" class="spinner /">
+					<br />
+					Speed
+					<input id="sloshspeed" class="spinner /">
+					<br />
+					<input type="radio" name="tides" id="high" value="2" checked="checked" />
+					High
+					<input type="radio" name="tides" id="mean" value="0" />
+					Mean
+					<input type="radio" name="tides" id="low" value="1" />
+					Low
+				</div>
+
+				<div id="psurge">
+					Date
+					<input type="text" id="surgedate" class="hasDatePicker" value="10/29/2012"  />
+					<br />
+					Advisory
+					<select id="advisory">
+						<option value="Adv21">Adv21</option>
+						<option value="Adv22">Adv22</option>
+						<option value="Adv23">Adv23</option>
+						<option value="Adv24">Adv24</option>
+						<option value="Adv25">Adv25</option>
+						<option value="Adv26" selected="selected">Adv26</option>
+						<option value="Adv27">Adv27</option>
+						<option value="Adv28">Adv28</option>
+						<option value="Adv29">Adv29</option>
+						<option value="Adv30">Adv30</option>
+						<option value="Adv31">Adv31</option>
+					</select>
+					<br />
+					Hour
+					<select id="hour">
+						<option value="00">0</option>
+						<option value="06">6</option>
+						<option value="12">12</option>
+						<option value="18" selected="selected">18</option>
+					</select>
+					<br />
+					Height
+					<select id="height" name="height">
+						<option value="e10">10% Exceedance height</option>
+						<option value="e20">20% Exceedance height</option>
+						<option value="e30">30% Exceedance height</option>
+						<option value="e40">40% Exceedance height</option>
+						<option value="e50">50% Exceedance height</option>
+						<option value="e60">60% Exceedance height</option>
+						<option value="e70">70% Exceedance height</option>
+						<option value="e80">80% Exceedance height</option>
+						<option value="e90">90% Exceedance height</option>
+						<option value="gt2">Probability of storm surge &gt; 2 feet</option>
+						<option value="gt3">Probability of storm surge &gt; 3 feet</option>
+						<option value="gt4">Probability of storm surge &gt; 4 feet</option>
+						<option value="gt5">Probability of storm surge &gt; 5 feet</option>
+						<option value="gt6">Probability of storm surge &gt; 6 feet</option>
+						<option value="gt7">Probability of storm surge &gt; 7 feet</option>
+						<option value="gt8">Probability of storm surge &gt; 8 feet</option>
+						<option value="gt9">Probability of storm surge &gt; 9 feet</option>
+						<option value="gt10">Probability of storm surge &gt; 10 feet</option>
+						<option value="gt11">Probability of storm surge &gt; 11 feet</option>
+						<option value="gt12">Probability of storm surge &gt; 12 feet</option>
+						<option value="gt13">Probability of storm surge &gt; 13 feet</option>
+						<option value="gt14">Probability of storm surge &gt; 14 feet</option>
+						<option value="gt15">Probability of storm surge &gt; 15 feet</option>
+						<option value="gt16">Probability of storm surge &gt; 16 feet</option>
+						<option value="gt17">Probability of storm surge &gt; 17 feet</option>
+						<option value="gt18">Probability of storm surge &gt; 18 feet</option>
+						<option value="gt19">Probability of storm surge &gt; 19 feet</option>
+						<option value="gt20">Probability of storm surge &gt; 20 feet</option>
+						<option value="gt21">Probability of storm surge &gt; 21 feet</option>
+						<option value="gt22">Probability of storm surge &gt; 22 feet</option>
+						<option value="gt23">Probability of storm surge &gt; 23 feet</option>
+						<option value="gt24">Probability of storm surge &gt; 24 feet</option>
+						<option value="gt25">Probability of storm surge &gt; 25 feet</option>
+					</select>
+				</div>
 			</div>
-			
-			<div id="psurge">
-				
-			</div>
-			</div>
 			<br />
-			Animate:<button id="fastest" onclick="$('#animate').val(1)">|&lt;</button><input id="animate" class="spinner"/><button id="slowest" onclick="$('#animate').val(20000)">&gt;|</button>
+			Animate:
+			<br />
+			<button id="fastest" onclick="$('#animate').val(0)">
+				|&lt;
+			</button>
+			<input id="animate" class="spinner"/>
+			<button id="slowest" onclick="$('#animate').val(20000)">
+				&gt;|
+			</button>
 			<br />
 			<input type="checkbox" name="loop" id="loop" />
 			Loop
@@ -95,11 +179,12 @@
 			<input type="checkbox" name="direction" id="direction" checked="checked" />
 			Forward
 			<br />
-			<div id="btnTally" onclick="reveal('tallies')">Tallies</div>
-			<div id="tallies">
+			<div id="btnTally" onclick="reveal('tallies')">
+				Tallies
 			</div>
+			<div id="tallies"></div>
 			<br />
-			
+
 			<div id="progressbar"></div>
 		</div>
 	</body>
