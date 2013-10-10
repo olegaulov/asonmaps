@@ -128,10 +128,10 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 	$elasticaQuery -> addSort("tweet.created_at");
 
 	$elasticaQuery -> setFields(array(
+		"id_str",
 		"created_at",
 		"text",
-		"geo",
-		"id_str"
+		"geo"
 	));
 
 	$elasticaIndex = $elasticaClient -> getIndex("twittersandy");
