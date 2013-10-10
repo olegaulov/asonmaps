@@ -44,6 +44,11 @@ google.maps.Marker.prototype.setMap = function(map)
 	this._setMap(map);
 };
 
+function modPoint(p)
+{
+	p.setMap(null)
+}
+
 function plot(hits, i)
 {
 	var d = 0;
@@ -68,7 +73,7 @@ function plot(hits, i)
 			icon : 'tweetpin.png'
 		});
 		
-		$("#mediafeed").append("<p>" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+		$("#mediafeed").append("<p id=\"p" + el.id_str + "\"><input type=\"checkbox\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 
 		google.maps.event.addListener(m, 'click', function(){});
 		t++;
@@ -298,11 +303,8 @@ function buildkmz()
 		var kmz = "sandy_" + $("#advisory").val() + date + num + $("#height").val() + "_1.kmz";
 		ctaLayer = new google.maps.KmlLayer('http://bluegrit.cs.umbc.edu/~adprice1/TweetMine/SLOSH/' + kmz + '.kmz');
 		ctaLayer.setMap(map);
-	}
-	
-	
+	}	
 }
-
 
 function parsetime(t)
 {
