@@ -15,6 +15,8 @@ var pdaterange = {};
 var pid;
 var ctaLayer;
 
+var points = [];
+
 google.maps.visualRefresh = true;
 
 google.maps.Map.prototype.markers = new Array();
@@ -46,7 +48,14 @@ google.maps.Marker.prototype.setMap = function(map)
 
 function modPoint(p)
 {
-	p.setMap(null)
+	if(points[p].getVisible())
+	{
+		points[p].setVisible(false);
+	}
+	else
+	{
+		points[p].setVisible(true);
+	}
 }
 
 function plot(hits, i)
@@ -72,10 +81,26 @@ function plot(hits, i)
 			title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
 			icon : 'tweetpin.png'
 		});
-		
-		$("#mediafeed").append("<p id=\"p" + el.id_str + "\"><input type=\"checkbox\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 
-		google.maps.event.addListener(m, 'click', function(){});
+		points.push(m);
+		$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+
+		google.maps.event.addListener(m, 'click', function()
+		{
+			/*$("#divimg").html("<a id=\"popupimg\" href=\"tweetpin.png\" rel=\"group\" class=\"fancybox\" title=\"" + (el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")") + "\"></a>");
+			$("#divimg a").html("<img src=\"tweetpin.png\" />");
+			$("#divimg a").click();*/	
+			
+			$("#mediafeed").scrollTop(0);
+			var top = $("#" + el.id).position().top;
+			$("#mediafeed").scrollTop(top);
+			
+			/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+			$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+			$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+			$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+			$("#flooding").spinner({max : 20,	min : 0});*/	
+		});
 		t++;
 
 		if (tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
@@ -100,13 +125,25 @@ function plot(hits, i)
 			icon : 'instagrampin.png'
 		});
 		
-		$("#mediafeed").append("<p>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+		points.push(m);
+		
+		$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 		
 		google.maps.event.addListener(m, 'click', function()
 		{
-			$("#divimg").html("<a class=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\"></a>");
-			$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" /><p style=\"width:30%\">" + (el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "") + "</p>");
+			$("#divimg").html("<a id=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
+			$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 			$("#divimg a").click();
+			
+			$("#mediafeed").scrollTop(0);
+			var top = $("#" + el.id_str).position().top;
+			$("#mediafeed").scrollTop(top);
+			
+			/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+			$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+			$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+			$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+			$("#flooding").spinner({max : 20,	min : 0});*/		
 		});
 
 		p++;
@@ -147,7 +184,7 @@ function plot(hits, i)
 		setTimeout(function(){plot(hits, i + 1);}, anim);
 	}
 	else
-	{		
+	{
 		if($("#loop")[0].checked)
 		{
 			$("#pid").html(setTimeout(function(){drawmap(hits);}, anim));
@@ -180,10 +217,28 @@ function plotall(hits)
 				title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
 				icon : 'tweetpin.png'
 			});
+
+			points.push(m);
 			
-			$("#mediafeed").append("<p>" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+			$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 	
-			google.maps.event.addListener(m, 'click', function(){});
+			google.maps.event.addListener(m, 'click', function()
+			{
+
+				/*$("#divimg").html("<a id=\"popupimg\" href=\"tweetpin.png\" rel=\"group\" class=\"fancybox\" title=\"" + (el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")") + "\"></a>");
+				$("#divimg a").html("<img src=\"tweetpin.png\" />");
+				$("#divimg a").click();*/	
+				
+				$("#mediafeed").scrollTop(0);
+				var top = $("#" + el.id).position().top;
+				$("#mediafeed").scrollTop(top);
+				
+				/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+				$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+				$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+				$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+				$("#flooding").spinner({max : 20,	min : 0});*/	
+			});
 			t++;
 	
 			if (tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
@@ -207,14 +262,25 @@ function plotall(hits)
 				title : (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")",
 				icon : 'instagrampin.png'
 			});
-			
-			$("#mediafeed").append("<p>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+
+			points.push(m);
+			$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 			
 			google.maps.event.addListener(m, 'click', function()
 			{
-				$("#divimg").html("<a class=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\"></a>");
-				$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" /><p style=\"width:30%\">" + (el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "") + "</p>");
+				$("#divimg").html("<a id=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
+				$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 				$("#divimg a").click();
+				
+				$("#mediafeed").scrollTop(0);
+				var top = $("#" + el.id_str).position().top;
+				$("#mediafeed").scrollTop(top);
+				
+				/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+				$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+				$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+				$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+				$("#flooding").spinner({max : 20,	min : 0});*/		
 			});
 	
 			p++;
@@ -261,6 +327,7 @@ function drawmap(hits)
 		t = 0;
 		tdaterange = {};
 		pdaterange = {};
+		points = [];
 		if(parseInt($("#animate").val()) > 0)
 		{
 			plot(hits, 0);
@@ -325,7 +392,6 @@ function parsetime(t)
 	return [h, m];
 }
 
-
 function filterdata()
 {	
 	var sd = $("#sdatepicker").val().split("/");
@@ -370,7 +436,6 @@ function filterdata()
 		}
 	});
 }
-
 
 function preparse(text)
 {
@@ -420,7 +485,6 @@ function preparse(text)
 	}
 }
 
-
 function mergesort(m)
 {
 	if (m.length > 1)
@@ -451,7 +515,6 @@ function mergesort(m)
 		return m;
 	}
 }
-
 
 function merge(left, right)
 {
@@ -486,7 +549,6 @@ function merge(left, right)
 	return result;
 }
 
-
 function initialize()
 {	
 	$(document).ready(function()
@@ -519,7 +581,16 @@ function initialize()
 	
 		Globalize.culture("en-EN");
 	
-		$('.fancybox').fancybox();
+		$('.fancybox').fancybox({
+			maxWidth	: 800,
+			maxHeight	: 600,
+			helpers: {
+				title	: {
+					type: 'outside'
+				}
+			}
+		});
+		
 		$('#sdatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
 		$('#edatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
 		$('#surgedate').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
@@ -568,7 +639,7 @@ function initialize()
 	var ed = $("#edatepicker").val().split("/");
 	var sdate = new Date(sd[2], sd[0] - 1, sd[1], 0, 0, 0);
 	var edate = new Date(ed[2], ed[0] - 1, ed[1], 12, 0, 0);
-	
+
 	reveal("tallies");
 	
 	$.ajax({
