@@ -1,32 +1,17 @@
 <?php
-$id = $_POST["id"];
-echo $id;
-$mask = "*.jpg"
-array_map("unlink", glob($mask));
+$id = $_GET["id"];
+$type = $_GET["type"];
 
-$ses = ssh2_connect("intel03");
-echo $ses;
-if($ses)
+if($type == "image")
 {
-	if(ssh2_auth_pubkey_file($ses , "adprice1", "/home/adprice1/.ssh/id_rsa.pub", "/home/adprice1/.ssh/id_rsa"))
-	{
-		if(ssh2_scp_recv($ses, "/bluegrit/nfs3/oleg2/instagram/hurricanesandy/$id.jpg", "$id.jpg"))
-		{
-			echo "get it";
-		}
-		else 
-		{
-			echo "lost it";	
-		}
-	}
-	else 
-	{
-		echo "no session";	
-	}
+	echo "<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/$id.jpg\" />";
 }
-else 
-{
-	echo "no host";	
-}
+				
+				
+//$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+//$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+//$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+//$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+//$("#flooding").spinner({max : 20,	min : 0});		
 ?>
 
