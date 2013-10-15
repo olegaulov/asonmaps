@@ -91,15 +91,24 @@ function plot(hits, i)
 			$("#divimg a").html("<img src=\"tweetpin.png\" />");
 			$("#divimg a").click();*/	
 			
-			$("#mediafeed").scrollTop(0);
-			var top = $("#" + el.id_str).position().top;
-			$("#mediafeed").scrollTop(top);
+			//$("#mediafeed").scrollTop(0);
+			//var top = $("#" + el.id_str).position().top;
+			//$("#mediafeed").scrollTop(top);
 			
 			/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
 			$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
 			$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
 			$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
-			$("#flooding").spinner({max : 20,	min : 0});*/	
+			$("#flooding").spinner({max : 20,	min : 0});*/
+			
+			$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">tweet</a>");
+			
+			//$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
+			$("#divimg a").click();
+			
+			$("#mediafeed").scrollTop(0);
+			var top = $("#" + el.id_str).position().top;
+			$("#mediafeed").scrollTop(top);
 		});
 		t++;
 
@@ -131,10 +140,11 @@ function plot(hits, i)
 		
 		google.maps.event.addListener(m, 'click', function()
 		{
-			$("#divimg").html("<a id=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
-			//$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
+			//$("#divimg").html("<a id=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
 			
-			$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
+			//$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+			$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"iframe\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+			//$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 			$("#divimg a").click();
 			
 			$("#mediafeed").scrollTop(0);
@@ -588,8 +598,6 @@ function initialize()
 		Globalize.culture("en-EN");
 	
 		$('.fancybox').fancybox({
-			//maxWidth	: 800,
-			//maxHeight	: 600,
 			helpers: {
 				title	: {
 					type: 'outside'

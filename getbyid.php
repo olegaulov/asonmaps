@@ -1,20 +1,21 @@
 <?php
 $id = $_GET["id"];
 $type = $_GET["type"];
-$str = ""
+$st = "";
+
+ini_set("error_log", "/home/adprice1/public_html/error.log");
+ini_set("log_errors", "on");
+
 if($type == "image")
 {
-	str .= "<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/$id.jpg\" />";
-}
-				
-				
-/*
-str .= "<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage";
-str .= "<input id=\"flooding\" type=\"text\" />";
-str .= "<input id=\"crime\" type=\"checkbox\"/>Crime";
-str .= "<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage";
-*/
+	$st .= "<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/$id.jpg\" /><br />";
+}		
 
-return $str;
+$st .= "<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage";
+$st .= "<br /><input id=\"flooding\" type=\"text\" />";
+$st .= "<br /><input id=\"crime\" type=\"checkbox\"/>Crime<br />";
+$st .= "<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage";
+
+echo $st;
 ?>
 
