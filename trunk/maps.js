@@ -143,7 +143,7 @@ function plot(hits, i)
 			//$("#divimg").html("<a id=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
 			
 			//$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
-			$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"iframe\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+			$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
 			//$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 			$("#divimg a").click();
 			
@@ -281,22 +281,13 @@ function plotall(hits)
 			
 			google.maps.event.addListener(m, 'click', function()
 			{
-				//<a class="various"  href="/demo/ajax.php">Iframe</a>
-				//$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
 				$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"/getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
 				
-				//$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 				$("#divimg a").click();
 				
 				$("#mediafeed").scrollTop(0);
 				var top = $("#" + el.id).position().top;
-				$("#mediafeed").scrollTop(top);
-				
-				/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
-				$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
-				$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
-				$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
-				$("#flooding").spinner({max : 20,	min : 0});*/		
+				$("#mediafeed").scrollTop(top);	
 			});
 	
 			p++;
@@ -696,4 +687,44 @@ function reveal(id)
 	{
 		$("#" + id).slideUp();
 	}
+}
+
+function showdiv(id)
+{
+	if($("#" + id)[0].style.display == "none")
+	{
+		$("#" + id).show();
+	}
+	else
+	{
+		$("#" + id).hide();
+	}
+}
+
+
+function senddata(id)
+{
+	var mymarkup = {
+			poweroutageon: $("#poweroutageon")[0].checked,
+			poweroutageoff: $("#poweroutageoff")[0].checked,
+			flooding: $("#flooding")[0].checked,
+			feet: $("#feet").val(),
+			crime: $("#crime")[0].checked,
+			foodshortage: $("#foodshortage")[0].checked
+	};
+	
+	$.ajax({
+		url:"markup.php",
+		type:"POST",
+		data:{
+			index:"twittersandy",//db 
+			item:"tweet",//tbl 
+			record:id, 
+			markup:mymarkup
+		},
+		success:function(text)
+		{
+			$.fancybox.close();
+		}
+	});
 }
