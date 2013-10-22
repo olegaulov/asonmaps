@@ -12,20 +12,21 @@
 		<script type="text/javascript" src="jquery.js"></script>
 		<script type="text/javascript" src="jquery-ui.js"></script>
 		<script type="text/javascript" src="globalize.js"></script>
-		<script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js"></script>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCn6i3N8sOhO1xp2gIPYiGsCG2eU-r40es&sensor=false"></script>
+		<script type="text/javascript"
+		src="fancybox/source/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCn6i3N8sOhO1xp2gIPYiGsCG2eU-r40es&sensor=false"></script>
 		<script type="text/javascript" src="maps.js"></script>
-
 	</head>
 	<body onload="initialize()">
 		<div id="mediafeed"></div>
-		<div id="mapfield">
-			<p>
-				loading
-			</p>
-		</div>
+		<div id="mapfield"><p>loading</p></div>
+		<div id="divimg"></div>
+	
 		<div id="dataform">
-			<br />
+		<div id="accordion">
+			<h3>Section 1</h3>
+			<div>
 			<label for="sdate">Start Date</label>
 			<input type="text" id="sdatepicker" class="hasDatePicker" value="10/29/2012"  />
 			Time
@@ -45,11 +46,9 @@
 			<input type="text" id="picsearch" value="" />
 			<br />
 			<input type="radio" name="points" id="both" value="both" checked="checked" />
-			Both
-			<br />
-			<div id="divimg"></div>
-			<br />
-			<br />
+			</div>
+
+			<h3>Section 2</h3>
 			<div id="tabs">
 				<ul>
 					<li>
@@ -158,38 +157,39 @@
 					</select>
 				</div>
 			</div>
-			<br />
-			Animate:
-			<br />
-			<button id="fastest" onclick="$('#animate').val(0)">
-				|&lt;
-			</button>
-			<input id="animate" class="spinner"/>
-			<button id="slowest" onclick="$('#animate').val(20000)">
-				&gt;|
-			</button>
-			<br />
-			<input type="checkbox" name="loop" id="loop" />
-			Loop
-			<br />
-			
-			
-			<!--button id="rewind" onclick="rewind()">rewind</button>
-			<button id="pause">pause</button>
-			<button id="forward">forward</button-->
-			
-			
-			<input type="checkbox" name="direction" id="direction" checked="checked" />
-			Forward
-			<br />
-			<input type="button" id="filter" onclick="filterdata()" value="Filter" />
-			<div id="btnTally" onclick="reveal('tallies')">
-				Tallies
-			</div>
-			<div id="tallies"></div>
-			<br />
 
-			<div id="progressbar"></div>
+			<h3>Section 3</h3>
+			<div>
+				Animate:
+				<br />
+				<button id="fastest" onclick="$('#animate').val(0)">
+					|&lt;
+				</button>
+				<input id="animate" class="spinner"/>
+				<button id="slowest" onclick="$('#animate').val(20000)">
+					&gt;|
+				</button>
+				<br />
+				<input type="checkbox" name="loop" id="loop" />
+				Loop
+				<br />
+				<input type="checkbox" name="direction" id="direction" checked="checked" />
+				Forward
+				<br />
+				<input type="button" id="filter" onclick="filterdata()" value="Filter" />
+			</div>
+			
+			<h3>Section 4</h3>
+				<div>
+					<div id="btnTally" onclick="reveal('tallies')">
+						Tallies
+					</div>
+					<div id="tallies"></div>
+					<br />
+
+					<div id="progressbar"></div>
+				</div>
+		
 		</div>
 	</body>
 </html>
