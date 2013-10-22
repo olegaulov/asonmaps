@@ -87,8 +87,23 @@ function plot(hits, i)
 
 		google.maps.event.addListener(m, 'click', function()
 		{
-			$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" + el.text + "\">tweet</a>");
+			/*$("#divimg").html("<a id=\"popupimg\" href=\"tweetpin.png\" rel=\"group\" class=\"fancybox\" title=\"" + (el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")") + "\"></a>");
+			$("#divimg a").html("<img src=\"tweetpin.png\" />");
+			$("#divimg a").click();*/	
 			
+			//$("#mediafeed").scrollTop(0);
+			//var top = $("#" + el.id_str).position().top;
+			//$("#mediafeed").scrollTop(top);
+			
+			/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+			$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+			$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+			$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+			$("#flooding").spinner({max : 20,	min : 0});*/
+			
+			$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">tweet</a>");
+			
+			//$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 			$("#divimg a").click();
 			
 			$("#mediafeed").scrollTop(0);
@@ -125,12 +140,22 @@ function plot(hits, i)
 		
 		google.maps.event.addListener(m, 'click', function()
 		{
-			$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+			//$("#divimg").html("<a id=\"popupimg\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
+			
+			//$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+			$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"iframe\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+			//$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 			$("#divimg a").click();
 			
 			$("#mediafeed").scrollTop(0);
 			var top = $("#" + el.id).position().top;
-			$("#mediafeed").scrollTop(top);		
+			$("#mediafeed").scrollTop(top);
+			
+			/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+			$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+			$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+			$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+			$("#flooding").spinner({max : 20,	min : 0});*/		
 		});
 
 		p++;
@@ -211,13 +236,21 @@ function plotall(hits)
 	
 			google.maps.event.addListener(m, 'click', function()
 			{
-				$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" + el.text + "\">tweet</a>");
+				//$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"/getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
 				
-				$("#divimg a").click();
+				/*$("#divimg").html("<a id=\"popupimg\" href=\"tweetpin.png\" rel=\"group\" class=\"fancybox\" title=\"" + (el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")") + "\"></a>");
+				$("#divimg a").html("<img src=\"tweetpin.png\" />");
+				$("#divimg a").click();*/	
 				
 				$("#mediafeed").scrollTop(0);
 				var top = $("#" + el.id_str).position().top;
 				$("#mediafeed").scrollTop(top);
+				
+				/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+				$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+				$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+				$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+				$("#flooding").spinner({max : 20,	min : 0});*/	
 			});
 			t++;
 	
@@ -248,12 +281,22 @@ function plotall(hits)
 			
 			google.maps.event.addListener(m, 'click', function()
 			{
-				$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+				//<a class="various"  href="/demo/ajax.php">Iframe</a>
+				//$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"" + el.id + ".jpg\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
+				$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"/getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
+				
+				//$("#divimg a").html("<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/" + el.id + ".jpg\" />");
 				$("#divimg a").click();
 				
 				$("#mediafeed").scrollTop(0);
 				var top = $("#" + el.id).position().top;
-				$("#mediafeed").scrollTop(top);	
+				$("#mediafeed").scrollTop(top);
+				
+				/*$(".fancybox-skin")[0].html("<input id=\"poweroutage\" type=\"checkbox\"/>Power Outage");
+				$(".fancybox-skin")[0].append("<input id=\"flooding\" type=\"text\" />");
+				$(".fancybox-skin")[0].append("<input id=\"crime\" type=\"checkbox\"/>Crime");
+				$(".fancybox-skin")[0].append("<input id=\"foodshortage\" type=\"checkbox\"/>Food Shortage");
+				$("#flooding").spinner({max : 20,	min : 0});*/		
 			});
 	
 			p++;
@@ -276,6 +319,7 @@ function plotall(hits)
 	$("#tallies").html("<ul id=\"nums\"></ul>");
 	$("#nums").append("<li>tweets: " + t + "</li>");
 	$("#nums").append("<li>Tweetdates<ul id=\"tweetdates\"></ul></li>");
+	
 	for (var h in tdaterange)
 	{
 		$("#tweetdates").append("<li>" + h + ": " + tdaterange[h] + "</li>");
@@ -558,9 +602,10 @@ function initialize()
 			helpers: {
 				title	: {
 					type: 'outside'
-				},
+				}
 			},
-			minWidth:500
+			minWidth:600,
+			height:"auto"
 		});
 		
 		$('#sdatepicker').datepicker({minDate: new Date(2012, 9, 29), maxDate: new Date(2012, 10, 1)});
@@ -580,6 +625,9 @@ function initialize()
 		$("#sloshspeed").spinner({max:100, min:1});
 		
 		$("#tabs").tabs();
+			$( "#accordion" ).accordion();
+
+
 	});
 
 	var myLatLng = new google.maps.LatLng(40.8, -72.6);
@@ -654,44 +702,4 @@ function reveal(id)
 	{
 		$("#" + id).slideUp();
 	}
-}
-
-function showdiv(id)
-{
-	if($("#" + id)[0].style.display == "none")
-	{
-		$("#" + id).show();
-	}
-	else
-	{
-		$("#" + id).hide();
-	}
-}
-
-
-function senddata(id)
-{
-	var mymarkup = {
-			poweroutageon: $("#poweroutageon")[0].checked ? $("#poweroutageon")[0].checked : false,
-			poweroutageoff: $("#poweroutageon")[0].checked ? $("#poweroutageoff")[0].checked : false,
-			flooding: $("#flooding")[0].checked,
-			feet: $("#feet").val(),
-			crime: $("#crime")[0].checked,
-			foodshortage: $("#foodshortage")[0].checked
-	};
-	
-	$.ajax({
-		url:"markup.php",
-		type:"POST",
-		data:{
-			index:"twittersandy",//db 
-			item:"tweet",//tbl 
-			record:id, 
-			markup:mymarkup
-		},
-		success:function(text)
-		{
-			$.fancybox.close();
-		}
-	});
 }

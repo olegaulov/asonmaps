@@ -8,11 +8,11 @@ ini_set("log_errors", "on");
 
 if($type == "image")
 {
-	$st .= "<img src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/$id.jpg\" /><br />";
+	$st .= "<img width=\"80%\" src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/$id.jpg\" /><br />";
 }	
 else 
 {
-	$st .= "<img src=\"/asonmaps/tweetpin.png\" /><br />";
+	$st .= "<img width=\"80%\" src=\"/asonmaps/tweetpin.png\" /><br />";
 }	
 
 $st .= "<input id=\"poweroutage\" type=\"checkbox\" onclick=\"showdiv('powerctl')\"/>Power Outage";
