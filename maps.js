@@ -611,3 +611,29 @@ function showdiv(id)
         }
 }
 
+function senddata(id)
+{
+        var mymarkup = {
+                        poweroutageon: $("#poweroutageon")[0].checked,
+                        poweroutageoff: $("#poweroutageoff")[0].checked,
+                        flooding: $("#flooding")[0].checked,
+                        feet: $("#feet").val(),
+                        crime: $("#crime")[0].checked,
+                        foodshortage: $("#foodshortage")[0].checked
+        };
+       
+        $.ajax({
+                url:"markup.php",
+                type:"POST",
+                data:{
+                        index:"twittersandy",//db
+                        item:"tweet",//tbl
+                        record:id,
+                        markup:mymarkup
+                },
+                success:function(text)
+                {
+                        $.fancybox.close();
+                }
+        });
+}
