@@ -58,95 +58,105 @@ function modPoint(p)
 	}
 }
 
+function drawtweet(el)
+{
+	centerlat += el.geo.coordinates[0];
+	centerlong += el.geo.coordinates[1];
+
+	var day = el.created_at.split(" ")[0].split("-");
+	var time = el.created_at.split(" ")[1].split(":");
+
+	var d = new Date(day[0], day[1] - 1, day[2], time[0], time[1], time[2], 0);
+
+	var m = new google.maps.Marker({
+		position : new google.maps.LatLng(el.geo.coordinates[0], el.geo.coordinates[1]),
+		map : map,
+		title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
+		icon : 'tweetpin.png'
+	});
+
+	points.push(m);
+	$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+
+	google.maps.event.addListener(m, 'click', function()
+	{						
+		$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">tweet</a>");
+		
+		$("#divimg a").click();
+		
+		$("#mediafeed").scrollTop(0);
+		var top = $("#" + el.id_str).position().top;
+		$("#mediafeed").scrollTop(top);
+	});
+	t++;
+
+	if (tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
+	{
+		tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
+	}
+	else
+	{
+		tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
+	}
+}
+
+function drawpic(el)
+{
+	centerlat += el.location.latitude;
+	centerlong += el.location.longitude;
+	
+	var d = new Date(parseInt(el.created_time) * 1000);
+	var m = new google.maps.Marker({
+		position : new google.maps.LatLng(el.location.latitude, el.location.longitude),
+		map : map,
+		title : (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")",
+		icon : 'instagrampin.png'
+	});
+	
+	points.push(m);
+	
+	$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+	
+	google.maps.event.addListener(m, 'click', function()
+	{
+		$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+		$("#divimg a").click();
+		
+		$("#mediafeed").scrollTop(0);
+		var top = $("#" + el.id).position().top;
+		$("#mediafeed").scrollTop(top);	
+	});
+	
+	p++;
+	
+	if (pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
+	{
+		pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
+	}
+	else
+	{
+		pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
+	}
+}
+
 function plot(hits, i)
 {
-	var d = 0;
+	//var d = 0;
 	
 	var el = hits[i];
 	var anim = ($("#animate").val() == null ? .001 : parseInt($("#animate").val() * .001));
 	
 	if (el.geo != null && ($("#twitter")[0].checked || $("#both")[0].checked))
 	{
-		centerlat += el.geo.coordinates[0];
-		centerlong += el.geo.coordinates[1];
-
-		var day = el.created_at.split(" ")[0].split("-");
-		var time = el.created_at.split(" ")[1].split(":");
-
-		d = new Date(day[0], day[1] - 1, day[2], time[0], time[1], time[2], 0);
-
-		var m = new google.maps.Marker({
-			position : new google.maps.LatLng(el.geo.coordinates[0], el.geo.coordinates[1]),
-			map : map,
-			title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
-			icon : 'tweetpin.png'
-		});
-
-		points.push(m);
-		$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
-
-		google.maps.event.addListener(m, 'click', function()
-		{						
-			$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">tweet</a>");
-			
-			$("#divimg a").click();
-			
-			$("#mediafeed").scrollTop(0);
-			var top = $("#" + el.id_str).position().top;
-			$("#mediafeed").scrollTop(top);
-		});
-		t++;
-
-		if (tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
-		{
-			tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
-		}
-		else
-		{
-			tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
-		}
+		drawtweet(el);
 	}
 	else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
 	{
-		centerlat += el.location.latitude;
-		centerlong += el.location.longitude;
-
-		d = new Date(parseInt(el.created_time) * 1000);
-		var m = new google.maps.Marker({
-			position : new google.maps.LatLng(el.location.latitude, el.location.longitude),
-			map : map,
-			title : (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")",
-			icon : 'instagrampin.png'
-		});
-		
-		points.push(m);
-		
-		$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
-		
-		google.maps.event.addListener(m, 'click', function()
-		{
-			$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
-			$("#divimg a").click();
-			
-			$("#mediafeed").scrollTop(0);
-			var top = $("#" + el.id).position().top;
-			$("#mediafeed").scrollTop(top);	
-		});
-
-		p++;
-
-		if (pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
-		{
-			pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
-		}
-		else
-		{
-			pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
-		}
+		drawpic(el);
 	}
 	else
 	{
-		d = new Date();
+		//d = new Date();
 	}
 
 	$("#tallies").html("<ul id=\"nums\"></ul>");
@@ -185,84 +195,16 @@ function plot(hits, i)
 
 function plotall(hits)
 {
-	var d = 0;
+	//var d = 0;
 	hits.forEach(function(el, idx, all)
 	{
 		if (el.geo != null && ($("#twitter")[0].checked || $("#both")[0].checked))
 		{
-			centerlat += el.geo.coordinates[0];
-			centerlong += el.geo.coordinates[1];
-	
-			var day = el.created_at.split(" ")[0].split("-");
-			var time = el.created_at.split(" ")[1].split(":");
-	
-			d = new Date(day[0], day[1] - 1, day[2], time[0], time[1], time[2], 0);
-	
-			var m = new google.maps.Marker({
-				position : new google.maps.LatLng(el.geo.coordinates[0], el.geo.coordinates[1]),
-				map : map,
-				title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
-				icon : 'tweetpin.png'
-			});
-
-			points.push(m);
-			
-			$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
-	
-			google.maps.event.addListener(m, 'click', function()
-			{
-				$("#mediafeed").scrollTop(0);
-				var top = $("#" + el.id_str).position().top;
-				$("#mediafeed").scrollTop(top);	
-			});
-			t++;
-	
-			if (tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
-			{
-				tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
-			}
-			else
-			{
-				tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
-			}
+			drawtweet(el);
 		}
 		else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
 		{
-			centerlat += el.location.latitude;
-			centerlong += el.location.longitude;
-	
-			d = new Date(parseInt(el.created_time) * 1000);
-			var m = new google.maps.Marker({
-				position : new google.maps.LatLng(el.location.latitude, el.location.longitude),
-				map : map,
-				title : (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")",
-				icon : 'instagrampin.png'
-			});
-
-			points.push(m);
-			$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
-			
-			google.maps.event.addListener(m, 'click', function()
-			{
-				$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"/getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\"></a>");
-				
-				$("#divimg a").click();
-				
-				$("#mediafeed").scrollTop(0);
-				var top = $("#" + el.id).position().top;
-				$("#mediafeed").scrollTop(top);
-			});
-	
-			p++;
-	
-			if (pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
-			{
-				pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
-			}
-			else
-			{
-				pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
-			}
+			drawpic(el);
 		}
 		else
 		{
