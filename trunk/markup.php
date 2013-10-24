@@ -53,17 +53,24 @@ function addmarkup($index, $document, $docid, $data)
 
 //$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"party\\\":false,\\\"flood\\\":74};\"}";
 
+$mymarkup = array();
+$mymarkup["script"] = "ctx._source.markup12 = {\"poweroutageon\": " . $_POST["markup"]["poweroutageon"] .
+",\"poweroutageoff\":" . $_POST["markup"]["poweroutageoff"] .
+", \"flooding\":" . $_POST["markup"]["poweroutageoff"] .
+", \"feet\":" . $_POST["markup"]["feet"] .
+", \"crime\":" . $_POST["markup"]["crime"] .
+", \"foodshortage\":" . $_POST["markup"]["foodshortage"]};
 
-$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
+/*$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
 ",\\\"poweroutageoff\\\":" . $_POST["markup"]["poweroutageoff"] . 
 ", \\\"flooding\\\":" . $_POST["markup"]["poweroutageoff"] . 
 ", \\\"feet\\\":" . $_POST["markup"]["feet"] . 
 ", \\\"crime\\\":" . $_POST["markup"]["crime"] . 
-", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";
+", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";*/
 
 //print $mymarkup;
 //addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
 
-addmarkup($_POST["index"], $_POST["item"], $_POST["record"], $mymarkup);
+addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
 
 ?>
