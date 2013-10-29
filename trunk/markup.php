@@ -60,16 +60,25 @@ $mymarkup["script"] = "ctx._source.markup12 = {\"poweroutageon\": " . $_POST["ma
 ", \"feet\":" . $_POST["markup"]["feet"] .
 ", \"crime\":" . $_POST["markup"]["crime"] .
 ", \"foodshortage\":" . $_POST["markup"]["foodshortage"];*/
+try
+{
+	$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
+	",\\\"poweroutageoff\\\":" . $_POST["markup"]["poweroutageoff"] . 
+	", \\\"flooding\\\":" . $_POST["markup"]["poweroutageoff"] . 
+	", \\\"feet\\\":" . $_POST["markup"]["feet"] . 
+	", \\\"crime\\\":" . $_POST["markup"]["crime"] . 
+	", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";
+	
+	//print $mymarkup;
+	//addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
+	//print $mymarkup;
+	addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
+}
+catch (Exception $e) 
+{
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
 
-$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
-",\\\"poweroutageoff\\\":" . $_POST["markup"]["poweroutageoff"] . 
-", \\\"flooding\\\":" . $_POST["markup"]["poweroutageoff"] . 
-", \\\"feet\\\":" . $_POST["markup"]["feet"] . 
-", \\\"crime\\\":" . $_POST["markup"]["crime"] . 
-", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";
+echo "<script> console.Log(\" ERROR!!!!\");</script>"
 
-//print $mymarkup;
-//addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
-//print $mymarkup;
-addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
 ?>
