@@ -33,6 +33,7 @@ function addmarkup($index, $document, $docid, $data)
 	//curl_setopt($ch, CURLOPT_INFILESIZE, strlen($data));
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
+	print "execute<br />";
 	$http_result = curl_exec($ch);
 	$error = curl_error($ch);
 	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -72,13 +73,13 @@ try
 	//print $mymarkup;
 	//addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
 	//print $mymarkup;
-	addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
+	echo addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
 }
 catch (Exception $e) 
 {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
-echo "<script> console.Log(\" ERROR!!!!\");</script>"
+//echo "<script> console.Log(\" ERROR!!!!\");</script>"
 
 ?>
