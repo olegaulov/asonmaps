@@ -40,13 +40,13 @@ function addmarkup($index, $document, $docid, $data)
 	curl_close($ch);
 	fclose($fp);
 
-	/*print "result:$http_result<br />";
+	print "result:$http_result<br />";
 	print "code:$http_code<br />";
 	print "result:$http_result<br />";
 	if ($error)
 	{
 		print "error:$error<br />";
-	}*/
+	}
 
 	return $error;
 }
@@ -70,6 +70,6 @@ $mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_
 
 //print $mymarkup;
 //addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
-print $mymarkup;
+//print $mymarkup;
 addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
 ?>
