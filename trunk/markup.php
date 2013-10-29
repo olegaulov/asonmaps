@@ -12,7 +12,7 @@ function addmarkup($index, $document, $docid, $data)
 {
 	$url = "http://intel03:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
 
-	print "URL: " . $url;
+	//print "URL: $url<br />";
 	/** use a max of 256KB of RAM before going to disk */
 	$fp = fopen('php://temp/maxmemory:25000', 'w');
 	if (!$fp)
@@ -40,37 +40,36 @@ function addmarkup($index, $document, $docid, $data)
 	curl_close($ch);
 	fclose($fp);
 
-	print $http_result;
-	print $http_code;
-	print "<br /><br />$http_result";
+	/*print "result:$http_result<br />";
+	print "code:$http_code<br />";
+	print "result:$http_result<br />";
 	if ($error)
 	{
-		print "<br /><br />$error";
-	}
+		print "error:$error<br />";
+	}*/
 
-	return;
+	return $error;
 }
 
 //$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"party\\\":false,\\\"flood\\\":74};\"}";
 
-$mymarkup = array();
+/*$mymarkup = array();
 $mymarkup["script"] = "ctx._source.markup12 = {\"poweroutageon\": " . $_POST["markup"]["poweroutageon"] .
 ",\"poweroutageoff\":" . $_POST["markup"]["poweroutageoff"] .
 ", \"flooding\":" . $_POST["markup"]["poweroutageoff"] .
 ", \"feet\":" . $_POST["markup"]["feet"] .
 ", \"crime\":" . $_POST["markup"]["crime"] .
-", \"foodshortage\":" . $_POST["markup"]["foodshortage"]};
+", \"foodshortage\":" . $_POST["markup"]["foodshortage"];*/
 
-/*$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
+$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
 ",\\\"poweroutageoff\\\":" . $_POST["markup"]["poweroutageoff"] . 
 ", \\\"flooding\\\":" . $_POST["markup"]["poweroutageoff"] . 
 ", \\\"feet\\\":" . $_POST["markup"]["feet"] . 
 ", \\\"crime\\\":" . $_POST["markup"]["crime"] . 
-", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";*/
+", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";
 
 //print $mymarkup;
 //addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
-
+print $mymarkup;
 addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
-
 ?>
