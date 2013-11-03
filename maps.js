@@ -141,8 +141,6 @@ function drawpic(el)
 
 function plot(hits, i)
 {
-	//var d = 0;
-	
 	var el = hits[i];
 	var anim = ($("#animate").val() == null ? .001 : parseInt($("#animate").val() * .001));
 	
@@ -153,10 +151,6 @@ function plot(hits, i)
 	else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
 	{
 		drawpic(el);
-	}
-	else
-	{
-		//d = new Date();
 	}
 
 	$("#tallies").html("<ul id=\"nums\"></ul>");
@@ -617,7 +611,7 @@ function senddata(id)
                         poweroutageon: $("#poweroutageon")[0].checked,
                         poweroutageoff: $("#poweroutageoff")[0].checked,
                         flooding: $("#flooding")[0].checked,
-                        feet: $("#feet").val(),
+                        feet: ($("#feet").val() == "" ? 0 : $("#feet").val()),
                         crime: $("#crime")[0].checked,
                         foodshortage: $("#foodshortage")[0].checked
         };

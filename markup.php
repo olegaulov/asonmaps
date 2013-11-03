@@ -12,7 +12,7 @@ function addmarkup($index, $document, $docid, $data)
 {
 	$url = "http://intel03:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
 
-	//print "URL: $url<br />";
+	print "URL: $url<br />";
 	/** use a max of 256KB of RAM before going to disk */
 	/*$fp = fopen('php://temp/maxmemory:25000', 'w');
 	if (!$fp)
@@ -43,9 +43,8 @@ function addmarkup($index, $document, $docid, $data)
 	curl_close($ch);
 	//fclose($fp);
 
-	print "result:$http_result<br />";
-	print "code:$http_code<br />";
-	print "result:$http_result<br />";
+	//print "result:$http_result<br />";
+	//print "code:$http_code<br />";
 	if ($error)
 	{
 		print "error:$error<br />";
