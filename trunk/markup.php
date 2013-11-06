@@ -11,7 +11,8 @@ date_default_timezone_set("UTC");
 function addmarkup($index, $document, $docid, $data)
 {
 	$url = "http://intel03:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
-	print "URL: $url<br />";
+	//print "URL: $url<br />";
+	
 	/** use a max of 256KB of RAM before going to disk */
 	/*$fp = fopen('php://temp/maxmemory:25000', 'w');
 	if (!$fp)
@@ -30,7 +31,7 @@ function addmarkup($index, $document, $docid, $data)
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	//curl_setopt($ch, CURLOPT_INFILE, $fp);
 	//curl_setopt($ch, CURLOPT_INFILESIZE, strlen($data));
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($ch, CURLOPT_POST, $data);
 	
 	print "$data<br />";
 
@@ -55,7 +56,7 @@ function addmarkup($index, $document, $docid, $data)
 //$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"party\\\":false,\\\"flood\\\":74};\"}";
 
 /*$mymarkup = array();
-$mymarkup["script"] = "ctx._source.markup12 = {\"poweroutageon\": " . $_POST["markup"]["poweroutageon"] .
+$mymarkup["script"] = "ctx._source.markup = {\"poweroutageon\": " . $_POST["markup"]["poweroutageon"] .
 ",\"poweroutageoff\":" . $_POST["markup"]["poweroutageoff"] .
 ", \"flooding\":" . $_POST["markup"]["poweroutageoff"] .
 ", \"feet\":" . $_POST["markup"]["feet"] .
@@ -63,14 +64,14 @@ $mymarkup["script"] = "ctx._source.markup12 = {\"poweroutageon\": " . $_POST["ma
 ", \"foodshortage\":" . $_POST["markup"]["foodshortage"];*/
 try
 {
-	$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
+	$mymarkup = "{\"script\":\"ctx._source.markup = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
 	",\\\"poweroutageoff\\\":" . $_POST["markup"]["poweroutageoff"] . 
 	", \\\"flooding\\\":" . $_POST["markup"]["poweroutageoff"] . 
 	", \\\"feet\\\":" . $_POST["markup"]["feet"] . 
 	", \\\"crime\\\":" . $_POST["markup"]["crime"] . 
-	", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";
+	", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "};\"}";
 	//addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
-	echo addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
+	echo addmarkup($_POST["index"], $_POST["item"], $_POST["record"], $mymarkup);
 }
 catch (Exception $e) 
 {

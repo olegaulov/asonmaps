@@ -11,13 +11,13 @@ ini_set("log_errors", "on");
 if($type == "image")
 {
 	$st .= "<img width=\"80%\" src=\"http://bluegrit.cs.umbc.edu/~oleg2/instagrams/hurricanesandy/$id.jpg\" /><br />";
-	$tbl = "image";
+	$tbl = "instagram";
 	$db = "instagramsandy";
 }	
 else 
 {
 	$st .= "<img width=\"80%\" src=\"/asonmaps/tweetpin.png\" /><br />";
-	$tbl = "tweets";
+	$tbl = "tweet";
 	$db = "twittersandy";
 }	
 
