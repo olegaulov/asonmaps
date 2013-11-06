@@ -616,9 +616,6 @@ function senddata(db, tbl, id)
                         foodshortage: $("#foodshortage")[0].checked
         };
         
-        //var db = "instagramsandy";
-        //var tbl = "pictures";
-       
         $.ajax({
                 url:"markup.php",
                 type:"POST",
