@@ -605,7 +605,7 @@ function showdiv(id)
         }
 }
 
-function senddata(id)
+function senddata(db, tbl, id)
 {
         var mymarkup = {
                         poweroutageon: $("#poweroutageon")[0].checked,
@@ -615,13 +615,16 @@ function senddata(id)
                         crime: $("#crime")[0].checked,
                         foodshortage: $("#foodshortage")[0].checked
         };
+        
+        //var db = "instagramsandy";
+        //var tbl = "pictures";
        
         $.ajax({
                 url:"markup.php",
                 type:"POST",
                 data:{
-                        index:"twittersandy",//db
-                        item:"tweet",//tbl
+                        index:db,
+                        item:tbl,
                         record:id,
                         markup:mymarkup
                 },

@@ -11,7 +11,6 @@ date_default_timezone_set("UTC");
 function addmarkup($index, $document, $docid, $data)
 {
 	$url = "http://intel03:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
-
 	print "URL: $url<br />";
 	/** use a max of 256KB of RAM before going to disk */
 	/*$fp = fopen('php://temp/maxmemory:25000', 'w');
@@ -36,9 +35,9 @@ function addmarkup($index, $document, $docid, $data)
 	print "$data<br />";
 
 	print "execute<br />";
-	/*$http_result = curl_exec($ch);
+	$http_result = curl_exec($ch);
 	$error = curl_error($ch);
-	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);*/
+	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 	curl_close($ch);
 	//fclose($fp);
@@ -70,10 +69,7 @@ try
 	", \\\"feet\\\":" . $_POST["markup"]["feet"] . 
 	", \\\"crime\\\":" . $_POST["markup"]["crime"] . 
 	", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "}}";
-	
-	//print $mymarkup;
 	//addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
-	//print $mymarkup;
 	echo addmarkup($_POST["index"], $_POST["item"], $_POST["record"], json_encode($mymarkup));
 }
 catch (Exception $e) 
