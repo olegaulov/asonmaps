@@ -607,27 +607,28 @@ function showdiv(id)
 
 function senddata(db, tbl, id)
 {
-        var mymarkup = {
-                        poweroutageon: $("#poweroutageon")[0].checked,
-                        poweroutageoff: $("#poweroutageoff")[0].checked,
-                        flooding: $("#flooding")[0].checked,
-                        feet: ($("#feet").val() == "" ? 0 : $("#feet").val()),
-                        crime: $("#crime")[0].checked,
-                        foodshortage: $("#foodshortage")[0].checked
-        };
-        
-        $.ajax({
-                url:"markup.php",
-                type:"POST",
-                data:{
-                        index:db,
-                        item:tbl,
-                        record:id,
-                        markup:mymarkup
-                },
-                success:function(text)
-                {
-                        $.fancybox.close();
-                }
-        });
+    var mymarkup = {
+	    poweroutageon: $("#poweroutageon")[0].checked,
+	    poweroutageoff: $("#poweroutageoff")[0].checked,
+	    flooding: $("#flooding")[0].checked,
+	    feet: ($("#feet").val() == "" ? 0 : $("#feet").val()),
+	    crime: $("#crime")[0].checked,
+	    foodshortage: $("#foodshortage")[0].checked
+    };
+    
+    //http://intel03:9200/instagramsandy/instagram/312636592261404799_198195485/_update -d "{script:\"ctx._source.markup12 = {\\\"poweroutageon\\\":false, \\\"poweroutageoff\\\":false, \\\"flooding\\\":false, \\\"feet\\\":0, \\\"crime\\\":false, \\\"foodshortage\\\":true}\"}"         
+    $.ajax({
+        url:"markup.php",
+        type:"POST",
+        data:{
+            index:db,
+            item:tbl,
+            record:id,
+            markup:mymarkup
+        },
+        success:function(text)
+        {
+        	$.fancybox.close();
+        }
+    });
 }
