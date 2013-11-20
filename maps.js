@@ -610,15 +610,18 @@ function senddata(db, tbl, id)
     var mymarkup = {
 	    poweroutageon: $("#poweroutageon")[0].checked,
 	    poweroutageoff: $("#poweroutageoff")[0].checked,
-	    poweroutageunk: $("#poweroutageunk")[0].checked,
+	    poweroutageunk: $("#poweroutage")[0].checked,
+	    
 	    flooding: $("#flooding")[0].checked,
 	    feet: ($("#feet").val() == "" ? 0 : $("#feet").val()),
+	    
 	    crimetrue: $("#crimetrue")[0].checked,
 	    crimefalse: $("#crimefalse")[0].checked,
-	    crimenull: $("#crimenull")[0].checked,
+	    crimenull: $("#crime")[0].checked,
+	    
 	    foodtrue: $("#foodtrue")[0].checked,
 	    foodfalse: $("#foodfalse")[0].checked,
-	    foodnull: $("#foodnull")[0].checked
+	    foodnull: $("#foodshortage")[0].checked
     };
     
     //http://intel03:9200/instagramsandy/instagram/312636592261404799_198195485/_update -d "{script:\"ctx._source.markup12 = {\\\"poweroutageon\\\":false, \\\"poweroutageoff\\\":false, \\\"flooding\\\":false, \\\"feet\\\":0, \\\"crime\\\":false, \\\"foodshortage\\\":true}\"}"         
