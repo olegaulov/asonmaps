@@ -66,10 +66,17 @@ try
 {
 	$mymarkup = "{\"script\":\"ctx._source.markup = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
 	",\\\"poweroutageoff\\\":" . $_POST["markup"]["poweroutageoff"] . 
-	", \\\"flooding\\\":" . $_POST["markup"]["poweroutageoff"] . 
+	",\\\"poweroutageunk\\\":" . $_POST["markup"]["poweroutageunk"] . 
+	", \\\"flooding\\\":" . $_POST["markup"]["flooding"] . 
 	", \\\"feet\\\":" . $_POST["markup"]["feet"] . 
-	", \\\"crime\\\":" . $_POST["markup"]["crime"] . 
-	", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . "};\"}";
+	", \\\"crimetrue\\\":" . $_POST["markup"]["crimetrue"] . 
+	", \\\"crimefalse\\\":" . $_POST["markup"]["crimefalse"] . 
+	", \\\"crimenull\\\":" . $_POST["markup"]["crimenull"] . 
+	", \\\"foodtrue\\\":" . $_POST["markup"]["foodtrue"] . 
+	", \\\"foodfalse\\\":" . $_POST["markup"]["foodfalse"] . 
+	", \\\"foodnull\\\":" . $_POST["markup"]["foodnull"] . 
+	"};\"}";
+	
 	//addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
 	echo addmarkup($_POST["index"], $_POST["item"], $_POST["record"], $mymarkup);
 }
