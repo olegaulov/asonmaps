@@ -532,7 +532,7 @@ function initialize()
 	
 	$("#sloshcat").val("1");
 	$("#sloshspeed").val("20");
-	$("#animate").val("5000");
+	$("#animate").val("0");
 	
 	$("#progressbar").progressbar({value: 0});
 	$("#pid").html(setInterval(function()
@@ -610,10 +610,15 @@ function senddata(db, tbl, id)
     var mymarkup = {
 	    poweroutageon: $("#poweroutageon")[0].checked,
 	    poweroutageoff: $("#poweroutageoff")[0].checked,
+	    poweroutageunk: $("#poweroutageunk")[0].checked,
 	    flooding: $("#flooding")[0].checked,
 	    feet: ($("#feet").val() == "" ? 0 : $("#feet").val()),
-	    crime: $("#crime")[0].checked,
-	    foodshortage: $("#foodshortage")[0].checked
+	    crimetrue: $("#crimetrue")[0].checked,
+	    crimefalse: $("#crimefalse")[0].checked,
+	    crimenull: $("#crimenull")[0].checked,
+	    foodtrue: $("#foodtrue")[0].checked,
+	    foodfalse: $("#foodfalse")[0].checked,
+	    foodnull: $("#foodnull")[0].checked
     };
     
     //http://intel03:9200/instagramsandy/instagram/312636592261404799_198195485/_update -d "{script:\"ctx._source.markup12 = {\\\"poweroutageon\\\":false, \\\"poweroutageoff\\\":false, \\\"flooding\\\":false, \\\"feet\\\":0, \\\"crime\\\":false, \\\"foodshortage\\\":true}\"}"         

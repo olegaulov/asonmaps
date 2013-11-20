@@ -131,7 +131,13 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 		"id_str",
 		"created_at",
 		"text",
-		"geo"
+		"geo",
+		"poweroutageon",
+		"poweroutageoff",
+		"foodshortage",
+		"crime",
+		"flood",
+		"feet"
 	));
 
 	$elasticaIndex = $elasticaClient -> getIndex("twittersandy");
