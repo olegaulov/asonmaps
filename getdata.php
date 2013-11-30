@@ -59,7 +59,13 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 		"created_time",
 		"caption",
 		"location",
-		"id"
+		"id",
+		"poweroutageon",
+		"poweroutageoff",
+		"foodshortage",
+		"crime",
+		"flood",
+		"feet"
 	));
 
 	$elasticaIndex = $elasticaClient -> getIndex("instagramsandy");
@@ -167,9 +173,9 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 spl_autoload_register(function($class)
 {
 
-	if (file_exists('/home/oleg2/public_html/TweetMine/' . $class . '.php'))
+	if (file_exists('/home/oleg/public_html/TweetMine/' . $class . '.php'))
 	{
-		require_once ('/home/oleg2/public_html/TweetMine/' . $class . '.php');
+		require_once ('/home/oleg/public_html/TweetMine/' . $class . '.php');
 	}
 
 });
