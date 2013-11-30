@@ -46,18 +46,6 @@ google.maps.Marker.prototype.setMap = function(map)
 	this._setMap(map);
 };
 
-function modPoint(p)
-{
-	if(points[p].getVisible())
-	{
-		points[p].setVisible(false);
-	}
-	else
-	{
-		points[p].setVisible(true);
-	}
-}
-
 function drawtweet(el)
 {
 	centerlat += el.geo.coordinates[0];
@@ -80,7 +68,7 @@ function drawtweet(el)
 
 	google.maps.event.addListener(m, 'click', function()
 	{						
-		$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">tweet</a>");
+		$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.text != null ? el.text + " - " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")": "")+ "\">tweet</a>");
 		
 		$("#divimg a").click();
 		
@@ -137,92 +125,6 @@ function drawpic(el)
 	{
 		pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
 	}
-}
-
-function plot(hits, i)
-{
-	var el = hits[i];
-	var anim = ($("#animate").val() == null ? .001 : parseInt($("#animate").val() * .001));
-	
-	if (el.geo != null && ($("#twitter")[0].checked || $("#both")[0].checked))
-	{
-		drawtweet(el);
-	}
-	else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
-	{
-		drawpic(el);
-	}
-
-	$("#tallies").html("<ul id=\"nums\"></ul>");
-	$("#nums").append("<li>tweets: " + t + "</li>");
-	$("#nums").append("<li>Tweetdates<ul id=\"tweetdates\"></ul></li>");
-	for (var h in tdaterange)
-	{
-		$("#tweetdates").append("<li>" + h + ": " + tdaterange[h] + "</li>");
-	}
-
-	$("#nums").append("<li>pictures: " + p + "</li>");
-	$("#nums").append("<li>PicDates<ul id=\"picdates\"></ul></li>");
-	for(var h in pdaterange)
-	{
-		$("#picdates").append("<li>" + h + ": " + pdaterange[h] + "</li>");
-	}
-
-	$("#nums").append("<li>total: " + hits.length + "</li>");
-		
-	if(i < hits.length)
-	{
-		setTimeout(function(){plot(hits, i + 1);}, anim);
-	}
-	else
-	{
-		if($("#loop")[0].checked)
-		{
-			$("#pid").html(setTimeout(function(){drawmap(hits);}, anim));
-		}
-		else
-		{
-			$("#nums").append("<p>You have reached the end of the requested dataset.</p>");
-		}
-	}
-}
-
-function plotall(hits)
-{
-	//var d = 0;
-	hits.forEach(function(el, idx, all)
-	{
-		if (el.geo != null && ($("#twitter")[0].checked || $("#both")[0].checked))
-		{
-			drawtweet(el);
-		}
-		else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
-		{
-			drawpic(el);
-		}
-		else
-		{
-			d = new Date();
-		}			
-	});
-	
-	$("#tallies").html("<ul id=\"nums\"></ul>");
-	$("#nums").append("<li>tweets: " + t + "</li>");
-	$("#nums").append("<li>Tweetdates<ul id=\"tweetdates\"></ul></li>");
-	
-	for (var h in tdaterange)
-	{
-		$("#tweetdates").append("<li>" + h + ": " + tdaterange[h] + "</li>");
-	}
-	
-	$("#nums").append("<li>pictures: " + p + "</li>");
-	$("#nums").append("<li>PicDates<ul id=\"picdates\"></ul></li>");
-	for(var h in pdaterange)
-	{
-		$("#picdates").append("<li>" + h + ": " + pdaterange[h] + "</li>");
-	}
-	
-	$("#nums").append("<li>total: " + hits.length + "</li>");
 }
 
 function drawmap(hits)
@@ -392,70 +294,6 @@ function preparse(text)
 	}
 }
 
-function mergesort(m)
-{
-	if (m.length > 1)
-	{
-		var left = [];
-		var right = [];
-		var middle = m.length / 2;
-
-		for ( var x = 0; x < middle; x++)
-		{
-			left.push(m[x]);
-		}
-		for ( var x = middle; x < m.length; x++)
-		{
-			right.push(m[x]);
-		}
-
-		left = mergesort(left);
-		right = mergesort(right);
-		
-		var val = $("#progressbar").progressbar( "option", "value" );
-		$("#progressbar").progressbar({ value:  val + 1});
-
-		return merge(left, right);
-	}
-	else
-	{
-		return m;
-	}
-}
-
-function merge(left, right)
-{
-	var result = [];
-
-	while (left.length > 0 || right.length > 0)
-	{
-		if (left.length > 0 && right.length > 0)
-		{
-			if (left[0] <= right[0])
-			{
-				result.push(left[0]);
-				left = left.slice(1, left.length);
-			}
-			else
-			{
-				result.push(right[0]);
-				right = right.slice(1, right.length);
-			}
-		}
-		else if (left.length > 0)
-		{
-			result.push(left[0]);
-			left = left.slice(1, left.length);
-		}
-		else if (right.length > 0)
-		{
-			result.push(right[0]);
-			right = right.slice(1, right.length);
-		}
-	}
-	return result;
-}
-
 function initialize()
 {	
 	$(document).ready(function()
@@ -579,30 +417,6 @@ function initialize()
 			downloaderror = true;
 		}
 	});	
-}
-
-function reveal(id)
-{
-	if($("#" + id)[0].style.display == "none")
-	{
-		$("#" + id).slideDown();
-	}
-	else
-	{
-		$("#" + id).slideUp();
-	}
-}
-
-function showdiv(id)
-{
-        if($("#" + id)[0].style.display == "none")
-        {
-                $("#" + id).show();
-        }
-        else
-        {
-                $("#" + id).hide();
-        }
 }
 
 function senddata(db, tbl, id)
