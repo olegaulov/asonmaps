@@ -46,92 +46,11 @@ google.maps.Marker.prototype.setMap = function(map)
 	this._setMap(map);
 };
 
-function drawtweet(el)
-{
-	centerlat += el.geo.coordinates[0];
-	centerlong += el.geo.coordinates[1];
-
-	var day = el.created_at.split(" ")[0].split("-");
-	var time = el.created_at.split(" ")[1].split(":");
-
-	var d = new Date(day[0], day[1] - 1, day[2], time[0], time[1], time[2], 0);
-
-	var m = new google.maps.Marker({
-		position : new google.maps.LatLng(el.geo.coordinates[0], el.geo.coordinates[1]),
-		map : map,
-		title : el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")",
-		icon : 'tweetpin.png'
-	});
-
-	points.push(m);
-	$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
-
-	google.maps.event.addListener(m, 'click', function()
-	{						
-		$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.text != null ? el.text + " - " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")": "")+ "\">tweet</a>");
-		
-		$("#divimg a").click();
-		
-		$("#mediafeed").scrollTop(0);
-		var top = $("#" + el.id_str).position().top;
-		$("#mediafeed").scrollTop(top);
-	});
-	t++;
-
-	if (tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
-	{
-		tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
-	}
-	else
-	{
-		tdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
-	}
-}
-
-function drawpic(el)
-{
-	centerlat += el.location.latitude;
-	centerlong += el.location.longitude;
-	
-	var d = new Date(parseInt(el.created_time) * 1000);
-	var m = new google.maps.Marker({
-		position : new google.maps.LatLng(el.location.latitude, el.location.longitude),
-		map : map,
-		title : (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.location.latitude + "," + el.location.longitude + ")",
-		icon : 'instagrampin.png'
-	});
-	
-	points.push(m);
-	
-	$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
-	
-	google.maps.event.addListener(m, 'click', function()
-	{
-		$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
-		$("#divimg a").click();
-		
-		$("#mediafeed").scrollTop(0);
-		var top = $("#" + el.id).position().top;
-		$("#mediafeed").scrollTop(top);	
-	});
-	
-	p++;
-	
-	if (pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] == null)
-	{
-		pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()] = 1;
-	}
-	else
-	{
-		pdaterange[d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()]++;
-	}
-}
-
 function drawmap(hits)
 {
 	if (hits != null && hits.length > 0)
 	{
-		$("#mediafeed").html("");
+		//$("#mediafeed").html("");
 		p = 0;
 		t = 0;
 		tdaterange = {};
@@ -236,6 +155,7 @@ function filterdata()
 			map.clearMarkers(null);
 			buildkmz();
 
+			$("#mediafeed").html("");
 			drawmap(pics);
 			drawmap(tweets);
 		},
@@ -370,7 +290,7 @@ function initialize()
 	
 	$("#sloshcat").val("1");
 	$("#sloshspeed").val("20");
-	$("#animate").val("0");
+	$("#animate").val(0);
 	
 	$("#progressbar").progressbar({value: 0});
 	$("#pid").html(setInterval(function()

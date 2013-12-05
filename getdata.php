@@ -60,12 +60,13 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 		"caption",
 		"location",
 		"id",
-		"poweroutageon",
+		/*"poweroutageon",
 		"poweroutageoff",
 		"foodshortage",
 		"crime",
 		"flood",
-		"feet"
+		"feet"*/
+		"markup12"
 	));
 
 	$elasticaIndex = $elasticaClient -> getIndex("instagramsandy");
@@ -87,8 +88,6 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 	{
 		array_push($res, $elasticaResult -> getData());
 	}
-
-	//array_push($res, $elasticaQuery -> getQuery());
 
 	return $res;
 }
