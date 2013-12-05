@@ -71,18 +71,23 @@ foreach ($elasticaResults as $elasticaResult)
 	
 $st .= "<input id=\"poweroutage\" type=\"checkbox\" onclick=\"showdiv('powerctl')\"/>Power Outage";
 $st .= "<div id=\"powerctl\" style=\"display:none\">";
-$st .= "<input id=\"poweroutageon\" name=\"ponoff\" type=\"radio\" />Power On";
-$st .= "<input id=\"poweroutageoff\" name=\"ponoff\" type=\"radio\" />Power Off</div><br />";
-//use spinner
-$st .= "<input id=\"flooding\" type=\"checkbox\" onclick=\"showdiv('feet')\" />Flooding <input type=\"text\" id=\"feet\" style=\"display:none\" /><br />";
-$st .= "<input id=\"crime\" type=\"checkbox\" onclick=\"showdiv('crimectl')\"/>Crime<br />";
+$st .= "<input id=\"poweroutageon\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageon"] ? "checked=\"checked\"" : "") . " />Power On";
+$st .= "<input id=\"poweroutageoff\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageoff"] ? "checked=\"checked\"" : "") . "\" />Power Off</div><br />";
+
+$st .= "<input id=\"flooding\" type=\"checkbox\" onclick=\"showdiv('feet')\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["flooding"] ? "checked=\"checked\"" : "") . "/>Flooding ";
+$st .= "<input type=\"text\" id=\"feet\" style=\"display:none\" value=\"" . (isset($res[0]["markup12"]) ? $res[0]["markup12"]["feet"]:"") . "\" /><br />";
+$st .= "<input id=\"crime\" type=\"checkbox\" onclick=\"showdiv('crimectl')\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["crime"] ? "checked=\"checked\"" : "") . "/>Crime<br />";
+
 $st .= "<div id=\"crimectl\" style=\"display:none\">";
-$st .= "<input id=\"crimetrue\" name=\"conoff\" type=\"radio\" />True";
-$st .= "<input id=\"crimefalse\" name=\"conoff\" type=\"radio\" />False</div><br />";
-$st .= "<input id=\"foodshortage\" type=\"checkbox\" onclick=\"showdiv('foodctl')\"/>Food Shortage<br />";
+$st .= "<input id=\"crimetrue\" name=\"conoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["crime"] ? "checked=\"checked\"" : "") . " />True";
+$st .= "<input id=\"crimefalse\" name=\"conoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && !$res[0]["markup12"]["crime"] ? "checked=\"checked\"" : "") . " />False</div><br />";
+
+$st .= "<input id=\"foodshortage\" type=\"checkbox\" onclick=\"showdiv('foodctl')\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["foodshortage"] ? "checked=\"checked\"" : "") . "/>Food Shortage<br />";
+
 $st .= "<div id=\"foodctl\" style=\"display:none\">";
-$st .= "<input id=\"foodtrue\" name=\"fonoff\" type=\"radio\" />True";
-$st .= "<input id=\"foodfalse\" name=\"fonoff\" type=\"radio\" />False</div><br />";
+$st .= "<input id=\"foodtrue\" name=\"fonoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["foodshortage"] ? "checked=\"checked\"" : "") . "\" />True";
+$st .= "<input id=\"foodfalse\" name=\"fonoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && !$res[0]["markup12"]["foodshortage"] ? "checked=\"checked\"" : "") . "\" />False</div><br />";
+
 $st .= "<button onclick=\"senddata('$db', '$tbl', '$id')\">Save Data</button>";
 
 $st .= "<script type=\"text/javascript\">$('#feet').spinner({max:20, min:-1})</script>";
