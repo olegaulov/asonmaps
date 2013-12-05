@@ -195,21 +195,20 @@
 				<h3>Filter</h3>
 				<div>
 					<div class="fancybox-inner" style="overflow: auto; width: 625px; height: 298px;">
-						<img width="80%" src="http://bluegrit.cs.umbc.edu/~oleg/instagrams/hurricanesandy/312636592261404799_198195485.jpg"><br>
 						<input type="checkbox" onclick="showdiv('powerctl')" id="poweroutage">Power Outage
-						<div style="" id="powerctl">
+						<div id="powerctl">
 							<input type="radio" name="ponoff" id="poweroutageon">Power On
 							<input type="radio" name="ponoff" id="poweroutageoff">Power Off
+						</div>
+						<br>
+						<input type="checkbox" onclick="showdiv('feet')" id="flooding">Flooding 
+						<input type="radio" name="conoff" id="crimetrue">True
+						<input type="radio" checked="checked" name="conoff" id="crimefalse">False</div>
+						<input type="checkbox" onclick="showdiv('foodctl')" id="foodshortage">Food Shortage<br>
+							<div style="display:none" id="foodctl">
+							<input type="radio" checked="checked" name="fonoff" id="foodtrue">True
+							<input type="radio" name="fonoff" id="foodfalse">False
 							</div>
-							<br>
-							<input type="checkbox" onclick="showdiv('feet')" id="flooding">Flooding 
-							<input type="radio" name="conoff" id="crimetrue">True
-											<input type="radio" checked="checked" name="conoff" id="crimefalse">False</div>
-											<br>
-											<input type="checkbox" checked="checked" onclick="showdiv('foodctl')" id="foodshortage">Food Shortage<br>
-											<div style="display:none" id="foodctl">
-												<input type="radio" "="" checked="checked" name="fonoff" id="foodtrue">True
-												<input type="radio" "="" name="fonoff" id="foodfalse">False
 						</div>
 				</div>
 		
