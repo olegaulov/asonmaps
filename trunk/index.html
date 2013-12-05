@@ -196,14 +196,15 @@
 				<div>
 					<div class="fancybox-inner" style="overflow: auto; width: 625px; height: 298px;">
 						<input type="checkbox" onclick="showdiv('powerctl')" id="poweroutage">Power Outage
-						<div id="powerctl">
+						<div style="display:none" id="powerctl">
 							<input type="radio" name="ponoff" id="poweroutageon">Power On
 							<input type="radio" name="ponoff" id="poweroutageoff">Power Off
 						</div>
-						<br>
+						<br />
 						<input type="checkbox" onclick="showdiv('feet')" id="flooding">Flooding 
 						<input type="radio" name="conoff" id="crimetrue">True
-						<input type="radio" checked="checked" name="conoff" id="crimefalse">False</div>
+						<input type="radio" checked="checked" name="conoff" id="crimefalse">False
+						<br />
 						<input type="checkbox" onclick="showdiv('foodctl')" id="foodshortage">Food Shortage<br>
 							<div style="display:none" id="foodctl">
 							<input type="radio" checked="checked" name="fonoff" id="foodtrue">True

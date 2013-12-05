@@ -16,7 +16,7 @@ function __autoload_elastica($class)
 	}
 }
 
-function getsandypoints($start, $end, $txt, $sdate, $edate)
+function getsandypoints($start, $end, $txt, $sdate, $edate, $db)
 {
 	$elasticaClient = new \Elastica\Client( array(
 		'host' => 'intel03',
@@ -69,7 +69,7 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 		"markup12"
 	));
 
-	$elasticaIndex = $elasticaClient -> getIndex("instagramsandy");
+	$elasticaIndex = $elasticaClient -> getIndex($db);
 
 	$elasticaQuery -> setFrom($start);
 	// Where to start?
@@ -92,7 +92,7 @@ function getsandypoints($start, $end, $txt, $sdate, $edate)
 	return $res;
 }
 
-function gettweetpoints($start, $end, $txt, $sdate, $edate)
+function gettweetpoints($start, $end, $txt, $sdate, $edate, $db)
 {
 	$elasticaClient = new \Elastica\Client( array(
 		'host' => 'intel03',
@@ -137,15 +137,17 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate)
 		"created_at",
 		"text",
 		"geo",
-		"poweroutageon",
+		/*"poweroutageon",
 		"poweroutageoff",
 		"foodshortage",
 		"crime",
 		"flood",
-		"feet"
+		"feet"*/
+		"markup12"
 	));
 
-	$elasticaIndex = $elasticaClient -> getIndex("twittersandy");
+	//$sandy data, can be changed
+	$elasticaIndex = $elasticaClient -> getIndex($db);
 
 	$elasticaQuery -> setFrom($start);
 	// Where to start?
@@ -192,8 +194,9 @@ spl_autoload_register('__autoload_elastica');
 
 header('Content-Type: application/json');
 $hsh = array();
-$hsh["tweets"] = gettweetpoints($start, $end, $twittxt, $sdate, $edate);
-$hsh["pics"] = getsandypoints($start, $end, $pictxt, $sdate, $edate);
+
+$hsh["tweets"] = gettweetpoints($start, $end, $twittxt, $sdate, $edate, "twittersandy");
+$hsh["pics"] = getsandypoints($start, $end, $pictxt, $sdate, $edate, "instagramsandy");
 
 echo json_encode($hsh);
 ?>
