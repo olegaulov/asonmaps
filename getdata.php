@@ -189,14 +189,15 @@ $twittxt = (isset($_POST["twittext"]) ? $_POST["twittext"] : "");
 $pictxt = (isset($_POST["pictext"]) ? $_POST["pictext"] : "");
 $sdate = $_POST["sdate"];
 $edate = $_POST["edate"];
+$dbs = $_POST["dbs"];
 
 spl_autoload_register('__autoload_elastica');
 
 header('Content-Type: application/json');
 $hsh = array();
 
-$hsh["tweets"] = gettweetpoints($start, $end, $twittxt, $sdate, $edate, "twittersandy");
-$hsh["pics"] = getsandypoints($start, $end, $pictxt, $sdate, $edate, "instagramsandy");
+$hsh["tweets"] = gettweetpoints($start, $end, $twittxt, $sdate, $edate, $dbs[0]);//"twittersandy");
+$hsh["pics"] = getsandypoints($start, $end, $pictxt, $sdate, $edate, $dbs[1]);//"instagramsandy");
 
 echo json_encode($hsh);
 ?>

@@ -17,7 +17,7 @@ function __autoload_elastica($class)
 $id = $_GET["id"];
 $type = $_GET["type"];
 $st = "";
-$db = "";
+$db = $_GET["db"];
 $tbl = "";
 
 ini_set("error_log", "/home/adprice1/public_html/error.log");
@@ -41,14 +41,14 @@ if($type == "image")
 {
 	$st .= "<img width=\"80%\" src=\"http://bluegrit.cs.umbc.edu/~oleg/instagrams/hurricanesandy/$id.jpg\" /><br />";
 	$tbl = "instagram";
-	$db = "instagramsandy";
+	//$db = "instagramsandy";
 	$elasticaQueryMatch -> setField("instagram.id", $id);
 }	
 else 
 {
 	$st .= "<img width=\"80%\" src=\"/asonmaps/tweetpin.png\" /><br />";
 	$tbl = "tweet";
-	$db = "twittersandy";
+	//$db = "twittersandy";
 	$elasticaQueryMatch -> setField("tweet.id", $id);
 }
 
@@ -69,22 +69,22 @@ foreach ($elasticaResults as $elasticaResult)
 	array_push($res, $elasticaResult -> getData());
 }
 	
-$st .= "<input id=\"poweroutage\" type=\"checkbox\" onclick=\"showdiv('powerctl')\"/>Power Outage";
-$st .= "<div id=\"powerctl\" style=\"display:none\">";
+//$st .= "<input id=\"poweroutage\" type=\"checkbox\" onclick=\"showdiv('powerctl')\"/>Power Outage";
+//$st .= "<div id=\"powerctl\" style=\"display:none\">";
 $st .= "<input id=\"poweroutageon\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageon"] ? "checked=\"checked\"" : "") . " />Power On";
-$st .= "<input id=\"poweroutageoff\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageoff"] ? "checked=\"checked\"" : "") . "\" />Power Off</div><br />";
+$st .= "<input id=\"poweroutageoff\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageoff"] ? "checked=\"checked\"" : "") . "\" />Power Off<br />";
 
 $st .= "<input id=\"flooding\" type=\"checkbox\" onclick=\"showdiv('feet')\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["flooding"] ? "checked=\"checked\"" : "") . "/>Flooding ";
 $st .= "<input type=\"text\" id=\"feet\" style=\"display:none\" value=\"" . (isset($res[0]["markup12"]) ? $res[0]["markup12"]["feet"]:"") . "\" /><br />";
 $st .= "<input id=\"crime\" type=\"checkbox\" onclick=\"showdiv('crimectl')\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["crime"] ? "checked=\"checked\"" : "") . "/>Crime<br />";
 
-$st .= "<div id=\"crimectl\" style=\"display:none\">";
+$st .= "<div id=\"crimectl\" style=\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["flooding"] ? "" : "display:none") . "\">";
 $st .= "<input id=\"crimetrue\" name=\"conoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["crime"] ? "checked=\"checked\"" : "") . " />True";
 $st .= "<input id=\"crimefalse\" name=\"conoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && !$res[0]["markup12"]["crime"] ? "checked=\"checked\"" : "") . " />False</div><br />";
 
 $st .= "<input id=\"foodshortage\" type=\"checkbox\" onclick=\"showdiv('foodctl')\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["foodshortage"] ? "checked=\"checked\"" : "") . "/>Food Shortage<br />";
 
-$st .= "<div id=\"foodctl\" style=\"display:none\">";
+$st .= "<div id=\"foodctl\" style=\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["foodshortage"] ? "" : "display:none") . "\">";
 $st .= "<input id=\"foodtrue\" name=\"fonoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["foodshortage"] ? "checked=\"checked\"" : "") . "\" />True";
 $st .= "<input id=\"foodfalse\" name=\"fonoff\" type=\"radio\"" . (isset($res[0]["markup12"]) && !$res[0]["markup12"]["foodshortage"] ? "checked=\"checked\"" : "") . "\" />False</div><br />";
 

@@ -88,12 +88,12 @@ function reveal(id)
 
 function showdiv(id)
 {
-        if($("#" + id)[0].style.display == "none")
-        {
-                $("#" + id).show();
-        }
-        else
-        {
-                $("#" + id).hide();
-        }
+    if($("#" + id)[0].style.display == "none")
+    {
+            $("#" + id).show();
+    }
+    else
+    {
+            $("#" + id).hide();
+    }
 }

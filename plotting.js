@@ -1,15 +1,15 @@
-function plot(hits, i)
+function plot(hits, i, db)
 {
 	var el = hits[i];
 	var anim = ($("#animate").val() == null ? .001 : parseInt($("#animate").val() * .001));
 	
 	if (el.geo != null && ($("#twitter")[0].checked || $("#both")[0].checked))
 	{
-		drawtweet(el);
+		drawtweet(el, db);
 	}
 	else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
 	{
-		drawpic(el);
+		drawpic(el, db);
 	}
 
 	$("#tallies").html("<ul id=\"nums\"></ul>");
@@ -46,22 +46,18 @@ function plot(hits, i)
 	}
 }
 
-function plotall(hits)
+function plotall(hits, db)
 {
 	hits.forEach(function(el, idx, all)
 	{
 		if (el.geo != null && ($("#twitter")[0].checked || $("#both")[0].checked))
 		{
-			drawtweet(el);
+			drawtweet(el, db);
 		}
 		else if (el.location != null && ($("#pictures")[0].checked || $("#both")[0].checked))
 		{
-			drawpic(el);
-		}
-		else
-		{
-			d = new Date();
-		}			
+			drawpic(el, db);
+		}		
 	});
 	
 	$("#tallies").html("<ul id=\"nums\"></ul>");
@@ -84,7 +80,7 @@ function plotall(hits)
 	$("#nums").append("<li>total: " + hits.length + "</li>");
 }
 
-function drawtweet(el)
+function drawtweet(el, db)
 {
 	centerlat += el.geo.coordinates[0];
 	centerlong += el.geo.coordinates[1];
@@ -101,12 +97,18 @@ function drawtweet(el)
 		icon : 'tweetpin.png'
 	});
 
+	m.db = db;
+	
+	if(el.markup12 != null)
+	{
+		m.markup12 = el.markup12;
+	}
 	points.push(m);
 	$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 
 	google.maps.event.addListener(m, 'click', function()
 	{						
-		$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=tweet&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.text != null ? el.text + " - " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")": "")+ "\">tweet</a>");
+		$("#divimg").html("<a id=\"popupimg\" data-fancybox-type=\"ajax\" href=\"getbyid.php?db=" + m.db + "&type=tweet&id=" + el.id + "\" rel=\"group\" class=\"fancybox fancybox.ajax\" title=\"" +(el.text != null ? el.text + " - " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "-(" + el.geo.coordinates[0] + "," + el.geo.coordinates[1] + ")": "")+ "\">tweet</a>");
 		
 		$("#divimg a").click();
 		
@@ -126,7 +128,7 @@ function drawtweet(el)
 	}
 }
 
-function drawpic(el)
+function drawpic(el, db)
 {
 	centerlat += el.location.latitude;
 	centerlong += el.location.longitude;
@@ -139,13 +141,19 @@ function drawpic(el)
 		icon : 'instagrampin.png'
 	});
 	
+	m.db = db;
+
+	if(el.markup12 != null)
+	{
+		m.markup12 = el.markup12;
+	}
 	points.push(m);
 	
 	$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 	
 	google.maps.event.addListener(m, 'click', function()
 	{
-		$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
+		$("#divimg").html("<a id=\"popupimg\" class=\"fancybox\" data-fancybox-type=\"ajax\" href=\"getbyid.php?db=" + m.db + "&type=image&id=" + el.id + "\" rel=\"group\" class=\"fancybox\" title=\"" +(el.caption != null ? el.caption.text + " - " + new Date(parseInt(el.caption.created_time) * 1000) + "-(" + el.location.latitude + "," + el.location.longitude + ")": "")+ "\">pic</a>");
 		$("#divimg a").click();
 		
 		$("#mediafeed").scrollTop(0);
