@@ -21,198 +21,245 @@
 		<script type="text/javascript" src="maps.js"></script>
 	</head>
 	<body onload="initialize()">
-		<div id="mediafeed"></div>
-		<div id="mapfield"><p>loading</p></div>
-		<div id="divimg"></div>
-	
+
+		<div id="tabs" class="tabs">
+			<ul>
+				<li><a href="#map">Map</a></li>
+				<li><a href="#settings">Settings</a></li>
+			</ul>
+			<div id="map">
+				<div>
+				<span style="align:left;left:10">Social Media Feed</span>
+				<br />
+				<div id="mediafeed"></div>
+				</div>
+				<div id="mapfield">
+					<p>
+						loading
+					</p>
+				</div>
+				<div id="divimg"></div>
+			</div>
+			<div id="settings">
+				Twitter Data
+				<select id="tweetdata">
+					<option value="twittersandy">twittersandy</option>
+				</select>
+				<br />
+				Instagram Data
+				<select id="instagramdata">
+					<option value="instagramsandy">instagramsandy</option>
+				</select>
+				<p>Latitude <input id="lat" class="spinner" type="text" value="40.8" /></p>
+				<p>Longitude <input id="long" class="spinner" type="text" value="-72.6" /></p>
+			</div>
+		</div>
+
+
 		<div id="dataform">
-		<div id="accordion">
-			<h3>Time Range</h3>
-			<div>
-			<label for="sdate">Start Date</label>
-			<input type="text" id="sdatepicker" class="hasDatePicker" value="10/29/2012"  />
-			Time
-			<input id="stime" class="spinner" maxlength="6" value="12:00 AM" />
-			<br />
-			<label for="edate">End Date</label>
-			<input type="text" id="edatepicker" class="hasDatePicker" value="10/29/2012" />
-			Time
-			<input id="etime" class="spinner"  maxlength="6" value="12:00 PM" />
-			<br />
-			<input type="radio" name="points" id="twitter" value="twitter" />
-			Twitter
-			<input type="text" id="tweetsearch" value="" />
-			<br />
-			<input type="radio" name="points" id="pictures" value="pictures" />
-			Pictures
-			<input type="text" id="picsearch" value="" />
-			<br />
-			<input type="radio" name="points" id="both" value="both" checked="checked" />Both
-			</div>
-
-			<h3>Overlay</h3>
-			<div id="tabs">
-				<ul>
-					<li>
-						<a href="#slosh">Slosh Model</a>
-					</li>
-					<li>
-						<a href="#psurge">P-Surge Model</a>
-					</li>
-				</ul>
-				<div id="slosh">
-					<select id="sloshdir">
-						<option value="n">N</option>
-						<option value="w">W</option>
-						<option value="e">E</option>
-						<option value="s">S</option>
-						<option value="ne">NE</option>
-						<option value="nw">NW</option>
-						<option value="se">SE</option>
-						<option value="sw">SW</option>
-						<option value="nne">NNE</option>
-						<option value="nnw">NNW</option>
-						<option value="sse">SSE</option>
-						<option value="ssw">SSW</option>
-						<option value="ene">NEN</option>
-						<option value="wnw" selected>WNW</option>
-						<option value="ese">ESE</option>
-						<option value="wsw">WSW</option>
-					</select>
+			<div id="accordion">
+				<h3>Time Range</h3>
+				<div>
+					<label for="sdate">Start Date</label>
+					<input type="text" id="sdatepicker" class="hasDatePicker" value="10/29/2012"  />
+					Time
+					<input id="stime" class="spinner" maxlength="6" value="12:00 AM" />
 					<br />
-					Category
-					<input id="sloshcat" class="spinner /">
+					<label for="edate">End Date</label>
+					<input type="text" id="edatepicker" class="hasDatePicker" value="10/29/2012" />
+					Time
+					<input id="etime" class="spinner"  maxlength="6" value="12:00 PM" />
 					<br />
-					Speed
-					<input id="sloshspeed" class="spinner /">
+					<input type="radio" name="points" id="twitter" value="twitter" />
+					Twitter
+					<input type="text" id="tweetsearch" value="" />
 					<br />
-					<input type="radio" name="tides" id="high" value="2" checked="checked" />
-					High
-					<input type="radio" name="tides" id="mean" value="0" />
-					Mean
-					<input type="radio" name="tides" id="low" value="1" />
-					Low
+					<input type="radio" name="points" id="pictures" value="pictures" />
+					Pictures
+					<input type="text" id="picsearch" value="" />
+					<br />
+					<input type="radio" name="points" id="both" value="both" checked="checked" />
+					Both
 				</div>
 
-				<div id="psurge">
-					Date
-					<input type="text" id="surgedate" class="hasDatePicker" value="10/29/2012"  />
-					<br />
-					Advisory
-					<select id="advisory">
-						<option value="Adv21">Adv21</option>
-						<option value="Adv22">Adv22</option>
-						<option value="Adv23">Adv23</option>
-						<option value="Adv24">Adv24</option>
-						<option value="Adv25">Adv25</option>
-						<option value="Adv26" selected="selected">Adv26</option>
-						<option value="Adv27">Adv27</option>
-						<option value="Adv28">Adv28</option>
-						<option value="Adv29">Adv29</option>
-						<option value="Adv30">Adv30</option>
-						<option value="Adv31">Adv31</option>
-					</select>
-					<br />
-					Hour
-					<select id="hour">
-						<option value="00">0</option>
-						<option value="06">6</option>
-						<option value="12">12</option>
-						<option value="18" selected="selected">18</option>
-					</select>
-					<br />
-					Height
-					<select id="height" name="height">
-						<option value="e10">10% Exceedance height</option>
-						<option value="e20">20% Exceedance height</option>
-						<option value="e30">30% Exceedance height</option>
-						<option value="e40">40% Exceedance height</option>
-						<option value="e50">50% Exceedance height</option>
-						<option value="e60">60% Exceedance height</option>
-						<option value="e70">70% Exceedance height</option>
-						<option value="e80">80% Exceedance height</option>
-						<option value="e90">90% Exceedance height</option>
-						<option value="gt2">Probability of storm surge &gt; 2 feet</option>
-						<option value="gt3">Probability of storm surge &gt; 3 feet</option>
-						<option value="gt4">Probability of storm surge &gt; 4 feet</option>
-						<option value="gt5">Probability of storm surge &gt; 5 feet</option>
-						<option value="gt6">Probability of storm surge &gt; 6 feet</option>
-						<option value="gt7">Probability of storm surge &gt; 7 feet</option>
-						<option value="gt8">Probability of storm surge &gt; 8 feet</option>
-						<option value="gt9">Probability of storm surge &gt; 9 feet</option>
-						<option value="gt10">Probability of storm surge &gt; 10 feet</option>
-						<option value="gt11">Probability of storm surge &gt; 11 feet</option>
-						<option value="gt12">Probability of storm surge &gt; 12 feet</option>
-						<option value="gt13">Probability of storm surge &gt; 13 feet</option>
-						<option value="gt14">Probability of storm surge &gt; 14 feet</option>
-						<option value="gt15">Probability of storm surge &gt; 15 feet</option>
-						<option value="gt16">Probability of storm surge &gt; 16 feet</option>
-						<option value="gt17">Probability of storm surge &gt; 17 feet</option>
-						<option value="gt18">Probability of storm surge &gt; 18 feet</option>
-						<option value="gt19">Probability of storm surge &gt; 19 feet</option>
-						<option value="gt20">Probability of storm surge &gt; 20 feet</option>
-						<option value="gt21">Probability of storm surge &gt; 21 feet</option>
-						<option value="gt22">Probability of storm surge &gt; 22 feet</option>
-						<option value="gt23">Probability of storm surge &gt; 23 feet</option>
-						<option value="gt24">Probability of storm surge &gt; 24 feet</option>
-						<option value="gt25">Probability of storm surge &gt; 25 feet</option>
-					</select>
-				</div>
-			</div>
+				<h3>Overlay</h3>
+				<div id="settingtabs">
+					<ul>
+						<li>
+							<a href="#slosh">Slosh Model</a>
+						</li>
+						<li>
+							<a href="#psurge">P-Surge Model</a>
+						</li>
+					</ul>
+					<div id="slosh">
+						<select id="sloshdir">
+							<option value="n">N</option>
+							<option value="w">W</option>
+							<option value="e">E</option>
+							<option value="s">S</option>
+							<option value="ne">NE</option>
+							<option value="nw">NW</option>
+							<option value="se">SE</option>
+							<option value="sw">SW</option>
+							<option value="nne">NNE</option>
+							<option value="nnw">NNW</option>
+							<option value="sse">SSE</option>
+							<option value="ssw">SSW</option>
+							<option value="ene">NEN</option>
+							<option value="wnw" selected>WNW</option>
+							<option value="ese">ESE</option>
+							<option value="wsw">WSW</option>
+						</select>
+						<br />
+						Category
+						<input id="sloshcat" class="spinner /">
+						<br />
+						Speed
+						<input id="sloshspeed" class="spinner /">
+						<br />
+						<input type="radio" name="tides" id="high" value="2" checked="checked" />
+						High
+						<input type="radio" name="tides" id="mean" value="0" />
+						Mean
+						<input type="radio" name="tides" id="low" value="1" />
+						Low
+					</div>
 
-			<h3>Animation</h3>
-			<div>
-				Animate:
-				<br />
-				<button id="fastest" onclick="$('#animate').val(1)">
-					|&lt;
-				</button>
-				<input id="animate" class="spinner"/>
-				<button id="slowest" onclick="$('#animate').val(20000)">
-					&gt;|
-				</button>
-				<br />
-				<input type="checkbox" name="loop" id="loop" />
-				Loop
-				<br />
-				<input type="checkbox" name="direction" id="direction" checked="checked" />
-				Forward
-				<br />
-				<input type="button" id="filter" onclick="filterdata()" value="Filter" />
-			</div>
-			
-			<h3>Progress</h3>
+					<div id="psurge">
+						Date
+						<input type="text" id="surgedate" class="hasDatePicker" value="10/29/2012"  />
+						<br />
+						Advisory
+						<select id="advisory">
+							<option value="Adv21">Adv21</option>
+							<option value="Adv22">Adv22</option>
+							<option value="Adv23">Adv23</option>
+							<option value="Adv24">Adv24</option>
+							<option value="Adv25">Adv25</option>
+							<option value="Adv26" selected="selected">Adv26</option>
+							<option value="Adv27">Adv27</option>
+							<option value="Adv28">Adv28</option>
+							<option value="Adv29">Adv29</option>
+							<option value="Adv30">Adv30</option>
+							<option value="Adv31">Adv31</option>
+						</select>
+						<br />
+						Hour
+						<select id="hour">
+							<option value="00">0</option>
+							<option value="06">6</option>
+							<option value="12">12</option>
+							<option value="18" selected="selected">18</option>
+						</select>
+						<br />
+						Height
+						<select id="height" name="height">
+							<option value="e10">10% Exceedance height</option>
+							<option value="e20">20% Exceedance height</option>
+							<option value="e30">30% Exceedance height</option>
+							<option value="e40">40% Exceedance height</option>
+							<option value="e50">50% Exceedance height</option>
+							<option value="e60">60% Exceedance height</option>
+							<option value="e70">70% Exceedance height</option>
+							<option value="e80">80% Exceedance height</option>
+							<option value="e90">90% Exceedance height</option>
+							<option value="gt2">Probability of storm surge &gt; 2 feet</option>
+							<option value="gt3">Probability of storm surge &gt; 3 feet</option>
+							<option value="gt4">Probability of storm surge &gt; 4 feet</option>
+							<option value="gt5">Probability of storm surge &gt; 5 feet</option>
+							<option value="gt6">Probability of storm surge &gt; 6 feet</option>
+							<option value="gt7">Probability of storm surge &gt; 7 feet</option>
+							<option value="gt8">Probability of storm surge &gt; 8 feet</option>
+							<option value="gt9">Probability of storm surge &gt; 9 feet</option>
+							<option value="gt10">Probability of storm surge &gt; 10 feet</option>
+							<option value="gt11">Probability of storm surge &gt; 11 feet</option>
+							<option value="gt12">Probability of storm surge &gt; 12 feet</option>
+							<option value="gt13">Probability of storm surge &gt; 13 feet</option>
+							<option value="gt14">Probability of storm surge &gt; 14 feet</option>
+							<option value="gt15">Probability of storm surge &gt; 15 feet</option>
+							<option value="gt16">Probability of storm surge &gt; 16 feet</option>
+							<option value="gt17">Probability of storm surge &gt; 17 feet</option>
+							<option value="gt18">Probability of storm surge &gt; 18 feet</option>
+							<option value="gt19">Probability of storm surge &gt; 19 feet</option>
+							<option value="gt20">Probability of storm surge &gt; 20 feet</option>
+							<option value="gt21">Probability of storm surge &gt; 21 feet</option>
+							<option value="gt22">Probability of storm surge &gt; 22 feet</option>
+							<option value="gt23">Probability of storm surge &gt; 23 feet</option>
+							<option value="gt24">Probability of storm surge &gt; 24 feet</option>
+							<option value="gt25">Probability of storm surge &gt; 25 feet</option>
+						</select>
+					</div>
+				</div>
+
+				<h3>Animation</h3>
+				<div>
+					Animate:
+					<br />
+					<button id="fastest" onclick="$('#animate').val(1)">
+						|&lt;
+					</button>
+					<input id="animate" class="spinner"/>
+					<button id="slowest" onclick="$('#animate').val(20000)">
+						&gt;|
+					</button>
+					<br />
+					<input type="checkbox" name="loop" id="loop" />
+					Loop
+					<br />
+					<input type="checkbox" name="direction" id="direction" checked="checked" />
+					Forward
+				</div>
+
+				<h3>Progress</h3>
 				<div>
 					<div id="btnTally" onclick="reveal('tallies')">
 						Tallies
 					</div>
-					<div id="tallies"></div>
+					<div id="tallies">num</div>
 					<br />
 
-					<div id="progressbar"></div>
+					<div id="progressbar">prog</div>
 				</div>
-				
+
 				<h3>Filter</h3>
 				<div>
-					<div class="fancybox-inner" style="overflow: auto; width: 625px; height: 298px;">
-						<input type="checkbox" onclick="showdiv('powerctl')" id="poweroutage">Power Outage
-						<div style="display:none" id="powerctl">
-							<input type="radio" name="ponoff" id="poweroutageon">Power On
-							<input type="radio" name="ponoff" id="poweroutageoff">Power Off
-						</div>
-						<br />
-						<input type="checkbox" onclick="showdiv('feet')" id="flooding">Flooding 
-						<input type="radio" name="conoff" id="crimetrue">True
-						<input type="radio" checked="checked" name="conoff" id="crimefalse">False
-						<br />
-						<input type="checkbox" onclick="showdiv('foodctl')" id="foodshortage">Food Shortage<br>
-							<div style="display:none" id="foodctl">
-							<input type="radio" checked="checked" name="fonoff" id="foodtrue">True
-							<input type="radio" name="fonoff" id="foodfalse">False
-							</div>
-						</div>
+					<!--input id="mpoweroutage" type="checkbox" onclick="showdiv('mpowerctl')"/>Power Outage
+					<div id="mpowerctl" style="display:none"-->
+					<input id="mpoweroutageon" name="ponoff" type="radio" />
+					Power On
+					<input id="mpoweroutageoff" name="ponoff" type="radio" />
+					Power Off <!--/div-->
+					<br />
+					<input id="mflooding" type="checkbox" onclick="showdiv('mfeet')" />
+					Flooding
+					<input type="text" id="mfeet" style="display:none" />
+					<br />
+					<input id="mcrime" type="checkbox" onclick="showdiv('mcrimectl')" />
+					Crime
+					<br />
+					<div id="mcrimectl" style="display:none">
+						<input id="mcrimetrue" name="conoff" type="radio" />
+						True
+						<input id="mcrimefalse" name="conoff" type="radio" />
+						False
+					</div>
+					<br />
+
+					<input id="mfoodshortage" type="checkbox" onclick="showdiv('mfoodctl')" />
+					Food Shortage
+					<div id="mfoodctl" style="display:none">
+						<input id="mfoodtrue" name="fonoff" type="radio" />
+						True
+						<input id="mfoodfalse" name="fonoff" type="radio" />
+						False
+					</div>
+					<br />
+
 				</div>
-		
+
+			</div>
+			<input type="button" id="filter" onclick="filterdata()" value="Filter" />
 		</div>
 	</body>
 </html>
