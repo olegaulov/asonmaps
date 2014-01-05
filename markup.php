@@ -33,9 +33,9 @@ function addmarkup($index, $document, $docid, $data)
 	//curl_setopt($ch, CURLOPT_INFILESIZE, strlen($data));
 	curl_setopt($ch, CURLOPT_POST, $data);
 	
-	print "$data<br />";
+	//print "$data<br />";
 
-	print "execute<br />";
+	//print "execute<br />";
 	$http_result = curl_exec($ch);
 	$error = curl_error($ch);
 	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -52,8 +52,6 @@ function addmarkup($index, $document, $docid, $data)
 
 	return $error;
 }
-
-//$mymarkup = "{\"script\":\"ctx._source.markup12 = {\\\"party\\\":false,\\\"flood\\\":74};\"}";
 
 /*$mymarkup = array();
 $mymarkup["script"] = "ctx._source.markup = {\"poweroutageon\": " . $_POST["markup"]["poweroutageon"] .

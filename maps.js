@@ -427,7 +427,7 @@ function initialize()
 			drawmap(pics, p);
 			drawmap(tweets, t);
 		},
-		error : function()
+		error : function(text)
 		{
 			downloaderror = true;
 		}
@@ -466,9 +466,13 @@ function senddata(db, tbl, id)
 			record : id,
 			markup : mymarkup
 		},
-		success : function(text)
+		success: function(text)
 		{
 			$.fancybox.close();
+		},
+		failure: function(text)
+		{
+			alert(test.responseTest);
 		}
 	});
 }

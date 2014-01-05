@@ -69,10 +69,10 @@ foreach ($elasticaResults as $elasticaResult)
 	array_push($res, $elasticaResult -> getData());
 }
 	
-//$st .= "<input id=\"poweroutage\" type=\"checkbox\" onclick=\"showdiv('powerctl')\"/>Power Outage";
-//$st .= "<div id=\"powerctl\" style=\"display:none\">";
+$st .= "<input id=\"poweroutage\" type=\"checkbox\" onclick=\"showdiv('powerctl')\"/>Power Outage";
+$st .= "<div id=\"powerctl\" style=\"display:none\">";
 $st .= "<input id=\"poweroutageon\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageon"] ? "checked=\"checked\"" : "") . " />Power On";
-$st .= "<input id=\"poweroutageoff\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageoff"] ? "checked=\"checked\"" : "") . "\" />Power Off<br />";
+$st .= "<input id=\"poweroutageoff\" name=\"ponoff\" type=\"radio\" " . (isset($res[0]["markup12"]) && $res[0]["markup12"]["poweroutageoff"] ? "checked=\"checked\"" : "") . "\" />Power Off</div><br />";
 
 $st .= "<input id=\"flooding\" type=\"checkbox\" onclick=\"showdiv('feet')\"" . (isset($res[0]["markup12"]) && $res[0]["markup12"]["flooding"] ? "checked=\"checked\"" : "") . "/>Flooding ";
 $st .= "<input type=\"text\" id=\"feet\" style=\"display:none\" value=\"" . (isset($res[0]["markup12"]) ? $res[0]["markup12"]["feet"]:"") . "\" /><br />";
