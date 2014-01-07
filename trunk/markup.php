@@ -14,14 +14,14 @@ function addmarkup($index, $document, $docid, $data)
 	//print "URL: $url<br />";
 	
 	/** use a max of 256KB of RAM before going to disk */
-	/*$fp = fopen('php://temp/maxmemory:25000', 'w');
+	$fp = fopen('php://temp/maxmemory:25000', 'w');
 	if (!$fp)
 	{
 		die('could not open temp memory data');
 	}
 
 	fwrite($fp, $data);
-	fseek($fp, 0);*/
+	fseek($fp, 0);
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_VERBOSE, 1);
@@ -29,8 +29,8 @@ function addmarkup($index, $document, $docid, $data)
 	curl_setopt($ch, CURLOPT_POST, 1);
 	//curl_setopt($ch, CURLOPT_PUT, 1);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	//curl_setopt($ch, CURLOPT_INFILE, $fp);
-	//curl_setopt($ch, CURLOPT_INFILESIZE, strlen($data));
+	curl_setopt($ch, CURLOPT_INFILE, $fp);
+	curl_setopt($ch, CURLOPT_INFILESIZE, strlen($data));
 	curl_setopt($ch, CURLOPT_POST, $data);
 	
 	//print "$data<br />";
@@ -50,7 +50,7 @@ function addmarkup($index, $document, $docid, $data)
 		print "error:$error<br />";
 	}
 
-	return $error;
+	return $error. " " . $url . " " . $http_result . " " . $http_code;
 }
 
 /*$mymarkup = array();
