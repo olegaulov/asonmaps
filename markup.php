@@ -11,40 +11,20 @@ date_default_timezone_set("UTC");
 function addmarkup($index, $document, $docid, $data)
 {
 	$url = "http://intel03:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
-	//print "URL: $url<br />";
-	
-	/** use a max of 256KB of RAM before going to disk */
-	$fp = fopen('php://temp/maxmemory:25000', 'w');
-	if (!$fp)
-	{
-		die('could not open temp memory data');
-	}
-
-	fwrite($fp, $data);
-	fseek($fp, 0);
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_VERBOSE, 1);
 	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	//curl_setopt($ch, CURLOPT_PUT, 1);
+	curl_setopt($ch, CURLOPT_POST, TRUE);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_INFILE, $fp);
-	curl_setopt($ch, CURLOPT_INFILESIZE, strlen($data));
-	curl_setopt($ch, CURLOPT_POST, $data);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 	
-	//print "$data<br />";
-
-	//print "execute<br />";
 	$http_result = curl_exec($ch);
 	$error = curl_error($ch);
 	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 	curl_close($ch);
-	//fclose($fp);
 
-	//print "result:$http_result<br />";
-	//print "code:$http_code<br />";
 	if ($error)
 	{
 		print "error:$error<br />";
