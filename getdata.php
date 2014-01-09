@@ -66,7 +66,7 @@ function getsandypoints($start, $end, $txt, $sdate, $edate, $db)
 		"crime",
 		"flood",
 		"feet"*/
-		"markup12"
+		"markup"
 	));
 
 	$elasticaIndex = $elasticaClient -> getIndex($db);
@@ -143,7 +143,7 @@ function gettweetpoints($start, $end, $txt, $sdate, $edate, $db)
 		"crime",
 		"flood",
 		"feet"*/
-		"markup12"
+		"markup"
 	));
 
 	//$sandy data, can be changed
