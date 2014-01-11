@@ -99,9 +99,9 @@ function drawtweet(el, db)
 
 	m.db = db;
 	
-	if(el.markup12 != null)
+	if(el.markup != null)
 	{
-		m.markup12 = el.markup12;
+		m.markup = el.markup;
 	}
 	points.push(m);
 	$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
@@ -143,9 +143,9 @@ function drawpic(el, db)
 	
 	m.db = db;
 
-	if(el.markup12 != null)
+	if(el.markup != null)
 	{
-		m.markup12 = el.markup12;
+		m.markup = el.markup;
 	}
 	points.push(m);
 	
