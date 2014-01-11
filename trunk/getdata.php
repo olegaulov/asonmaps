@@ -10,9 +10,9 @@ function __autoload_elastica($class)
 {
 	$path = str_replace('\\', '/', substr($class, 1));
 
-	if (file_exists('/home/oleg2/public_html/TweetMine/' . $path . '.php'))
+	if (file_exists('/home/adprice1/public_html/TweetMine/' . $path . '.php'))
 	{
-		require_once ('/home/oleg2/public_html/TweetMine/' . $path . '.php');
+		require_once ('/home/adprice1/public_html/TweetMine/' . $path . '.php');
 	}
 }
 
