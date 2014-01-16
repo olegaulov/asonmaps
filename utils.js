@@ -41,6 +41,23 @@ function modPoint(p)
 	}
 }
 
+function recenter(p)
+{
+	var lng = points[p].getPosition().lng();
+	var lat = points[p].getPosition().lat();
+
+	var myLatLng = new google.maps.LatLng(lat, lng);
+	
+	var mapOptions = {
+		zoom : 7,
+		center : myLatLng,
+		mapTypeId : google.maps.MapTypeId.HYBRID,
+		noClear : false
+	};
+
+	map = new google.maps.Map(document.getElementById('mapfield'), mapOptions);
+}
+
 function merge(left, right)
 {
 	var result = [];

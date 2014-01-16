@@ -40,6 +40,7 @@ $mymarkup["script"] = "ctx._source.markup = {\"poweroutageon\": " . $_POST["mark
 ", \"feet\":" . $_POST["markup"]["feet"] .
 ", \"crime\":" . $_POST["markup"]["crime"] .
 ", \"foodshortage\":" . $_POST["markup"]["foodshortage"];*/
+
 try
 {
 	$mymarkup = "{\"script\":\"ctx._source.markup = {\\\"poweroutageon\\\": " . $_POST["markup"]["poweroutageon"] . 
@@ -52,10 +53,10 @@ try
 	", \\\"crimenull\\\":" . $_POST["markup"]["crimenull"] . 
 	", \\\"foodtrue\\\":" . $_POST["markup"]["foodtrue"] . 
 	", \\\"foodfalse\\\":" . $_POST["markup"]["foodfalse"] . 
-	", \\\"foodnull\\\":" . $_POST["markup"]["foodnull"] . 
+	", \\\"foodshortage\\\":" . $_POST["markup"]["foodshortage"] . 
 	"};\"}";
 	
-	//addmarkup("testingupdatepropagation", "dataitem", "144152148442140424_13290050", $mymarkup);
+	
 	echo addmarkup($_POST["index"], $_POST["item"], $_POST["record"], $mymarkup);
 }
 catch (Exception $e) 
