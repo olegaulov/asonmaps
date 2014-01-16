@@ -104,7 +104,7 @@ function drawtweet(el, db)
 		m.markup = el.markup;
 	}
 	points.push(m);
-	$("#mediafeed").append("<p id=\"" + el.id_str + "\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+	$("#mediafeed").append("<p id=\"" + el.id_str + "\" onclick=\"recenter(" + (points.length - 1) + ")\"><input type=\"checkbox\" onclick=\"modPoint(" + (points.length - 1) + ")\" />" + el.text + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 
 	google.maps.event.addListener(m, 'click', function()
 	{						
@@ -149,7 +149,7 @@ function drawpic(el, db)
 	}
 	points.push(m);
 	
-	$("#mediafeed").append("<p id=\"" + el.id + "\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
+	$("#mediafeed").append("<p id=\"" + el.id + "\" onclick=\"recenter(" + (points.length - 1) + ")\"><input type=\"checkbox\" onclick=modPoint(" + (points.length - 1) + ")/>" + (el.caption != null ? el.caption.text : "") + " - " + d + " " + (d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear()) + "</p>\n");
 	
 	google.maps.event.addListener(m, 'click', function()
 	{

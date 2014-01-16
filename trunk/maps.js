@@ -85,19 +85,16 @@ function buildkmz()
 			}
 		}
 
-		var kmz = $("#sloshdir").val() + $("#sloshcat").val() + $("#sloshspeed")
-				.val() + "i" + tide;
+		var kmz = $("#sloshdir").val() + $("#sloshcat").val() + $("#sloshspeed").val() + "i" + tide;
 		ctaLayer = new google.maps.KmlLayer('http://bluegrit.cs.umbc.edu/~adprice1/asonmaps/SLOSH/' + kmz + '.kmz');
 		ctaLayer.setMap(map);
 	}
 	else
 	{
-		// sandy_Adv25_2012102812_gt6_1.kmz
-		var date = $("#surgedate").val();
+		var date = $("#surgedate").val().split("/");
 		var num = $("#hour").val();
-		var kmz = "sandy_" + $("#advisory").val() + date + num + $("#height")
-				.val() + "_1.kmz";
-		ctaLayer = new google.maps.KmlLayer('http://bluegrit.cs.umbc.edu/~adprice1/asonmaps/SLOSH/' + kmz + '.kmz');
+		var kmz = "sandy_" + $("#advisory").val() + "_" + date[2] + date[0] + date[1] + num + "_" + $("#height").val() + "_1.kmz";
+		ctaLayer = new google.maps.KmlLayer('http://bluegrit.cs.umbc.edu/~adprice1/asonmaps/psurgemodel/' + kmz);
 		ctaLayer.setMap(map);
 	}
 }
@@ -118,8 +115,7 @@ function parsetime(t)
 		h = 0;
 	}
 
-	return [ h, m
-	];
+	return [h, m];
 }
 
 function filterdata()
@@ -168,20 +164,20 @@ function filterdata()
 			{
 				map.markers.forEach(function(el, idx, all)
 				{
-					if (el.markup12 != null)
+					if (el.markup != null && $("#blank")[0].checked == false)
 					{
-						el.setVisible(el.markup12.poweroutageon == $("#mpoweroutageon")[0].checked) || (el.markup12.poweroutageoff == $("#mpoweroutageoff")[0].checked);
+						el.setVisible(el.markup.poweroutageon == $("#mpoweroutageon")[0].checked) || (el.markup.poweroutageoff == $("#mpoweroutageoff")[0].checked);
 														
-						if(el.markup12.flooding == $("#mflooding")[0].checked)
+						if(el.markup.flooding == $("#mflooding")[0].checked)
 						{
-							el.setVisible(el.markup12.feet <= parseInt($("#mfeet").val()));
+							el.setVisible(el.markup.feet <= parseInt($("#mfeet").val()));
 						}
 						else
 						{
 							el.setVisible(false);
 						}
 						
-						if(el.markup12.crime == $("#mcrime")[0].checked)
+						if(el.markup.crime == $("#mcrime")[0].checked)
 						{
 							el.setVisible($("#mcrimetrue")[0].checked);
 							el.setVisible(!$("#mcrimefalse")[0].checked);
@@ -201,9 +197,13 @@ function filterdata()
 							el.setVisible(false);
 						}								
 					}
-					else
+					else if(el.markup == null && $("#blank")[0].checked == false)
 					{
 						el.setVisible(false);
+					}
+					else if(el.markup == null && $("#blank")[0].checked)
+					{
+						el.setVisible(true);
 					}
 				});
 			}
@@ -307,15 +307,15 @@ function initialize()
 		});
 
 		$('#sdatepicker').datepicker({
-			minDate : new Date(2012, 9, 29),
+			minDate : new Date(2012, 9, 28),
 			maxDate : new Date(2012, 10, 1)
 		});
 		$('#edatepicker').datepicker({
-			minDate : new Date(2012, 9, 29),
+			minDate : new Date(2012, 9, 28),
 			maxDate : new Date(2012, 10, 1)
 		});
 		$('#surgedate').datepicker({
-			minDate : new Date(2012, 9, 29),
+			minDate : new Date(2012, 9, 28),
 			maxDate : new Date(2012, 10, 1)
 		});
 
@@ -436,13 +436,18 @@ function initialize()
 
 function senddata(db, tbl, id)
 {
+	if($("#flooding")[0].checked == false)
+	{
+		$("#feet").val("");
+	}
+	
 	var mymarkup = {
 		poweroutageon : $("#poweroutageon")[0].checked,
 		poweroutageoff : $("#poweroutageoff")[0].checked,
 		poweroutageunk : $("#poweroutage")[0].checked,
 
 		flooding : $("#flooding")[0].checked,
-		feet : ($("#feet").val() == "" ? 0 : $("#feet").val()),
+		feet : $("#feet").val(),
 
 		crimetrue : $("#crimetrue")[0].checked,
 		crimefalse : $("#crimefalse")[0].checked,
@@ -450,7 +455,7 @@ function senddata(db, tbl, id)
 
 		foodtrue : $("#foodtrue")[0].checked,
 		foodfalse : $("#foodfalse")[0].checked,
-		foodnull : $("#foodshortage")[0].checked
+		foodshortage : $("#foodshortage")[0].checked
 	};
 
 	// http://intel03:9200/instagramsandy/instagram/312636592261404799_198195485/_update
