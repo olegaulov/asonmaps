@@ -68,8 +68,6 @@ foreach ($elasticaResults as $elasticaResult)
 	array_push($res, $elasticaResult -> getData());
 }
 
-//print_r($res[0]);
-
 if (isset($res[0]["markup"]))
 {
 	$st .= "<input id=\"poweroutage\" type=\"checkbox\" onclick=\"showdiv('powerctl')\" " . (isset($res[0]["markup"]["poweroutageunk"]) ? "checked=\"checked\"" : "") . "/>Power Outage";

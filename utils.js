@@ -49,13 +49,18 @@ function recenter(p)
 	var myLatLng = new google.maps.LatLng(lat, lng);
 	
 	var mapOptions = {
-		zoom : 7,
+		zoom : 2,
 		center : myLatLng,
 		mapTypeId : google.maps.MapTypeId.HYBRID,
 		noClear : false
 	};
 
 	map = new google.maps.Map(document.getElementById('mapfield'), mapOptions);
+	buildkmz();
+	var t = $("#tweetdata").val();
+	var p = $("#instagramdata").val();
+	drawmap(pics, p);
+	drawmap(tweets, t);
 }
 
 function merge(left, right)
