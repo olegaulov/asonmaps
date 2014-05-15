@@ -24,7 +24,7 @@ ini_set("error_log", "/home/adprice1/public_html/error.log");
 ini_set("log_errors", "on");
 
 $elasticaClient = new \Elastica\Client( array(
-	'host' => 'intel03',
+	'host' => 'ibn134',#'intel03',
 	'port' => 9200
 ));
 

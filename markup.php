@@ -10,7 +10,8 @@ date_default_timezone_set("UTC");
 
 function addmarkup($index, $document, $docid, $data)
 {
-	$url = "http://intel03:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
+	#$url = "http://intel03:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
+	$url = "http://ibn134:9200/" . $index . "/" . $document . "/" . $docid . "/_update";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_VERBOSE, 1);

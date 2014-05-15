@@ -361,11 +361,9 @@ function initialize()
 		});
 	});
 
-	var myLatLng = new google.maps.LatLng(parseInt($("#lat").val()), parseInt($("#long").val()));
-
 	var mapOptions = {
-		zoom : 7,
-		center : myLatLng,
+		zoom : 9,
+		center : new google.maps.LatLng(parseFloat($("#lat").val()), parseFloat($("#long").val())),
 		mapTypeId : google.maps.MapTypeId.HYBRID,
 		noClear : false
 	};

@@ -19,7 +19,7 @@ function __autoload_elastica($class)
 function getsandypoints($start, $end, $txt, $sdate, $edate, $db)
 {
 	$elasticaClient = new \Elastica\Client( array(
-		'host' => 'intel03',
+		'host' => 'ibn134',#'intel03',
 		'port' => 9200
 	));
 
@@ -95,7 +95,7 @@ function getsandypoints($start, $end, $txt, $sdate, $edate, $db)
 function gettweetpoints($start, $end, $txt, $sdate, $edate, $db)
 {
 	$elasticaClient = new \Elastica\Client( array(
-		'host' => 'intel03',
+		'host' => 'ibn134',#'intel03',
 		'port' => 9200
 	));
 
